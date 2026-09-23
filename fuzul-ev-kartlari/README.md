@@ -8,8 +8,12 @@ HTML şablonları ve `kartlar.js` verisinden PNG kart görselleri üretir (2x ç
 | Dikey | `kart-dikey.html` | 4:5 | 1520 × 1900 | `cikti/alternatifler/<kart>-dikey.png` |
 | Kare | `kart-kare.html` | 1:1 | 1520 × 1520 | `cikti/alternatifler/<kart>-kare.png` |
 | Yatay | `kart-yatay.html` | 16:9 | 1920 × 1080 | `cikti/alternatifler/<kart>-yatay.png` |
+| Modül, klasik | `kart-modul.html` | 341:277 | 1023 × 831 | `cikti/modul-341x277/<kart>-klasik.png` |
+| Modül, vurgulu | `kart-modul-vurgulu.html` | 341:277 | 1023 × 831 | `cikti/modul-341x277/<kart>-vurgulu.png` |
 
-Tüm yerleşimler aynı logo/başlık satırını, rozeti ve "Hızlı Başvur" butonunu (`ortak.css`, `ortak.js`) kullanır. Dikey, kare ve yatay yerleşimlerde aylık taksit öne çıkarılır.
+Tüm yerleşimler aynı logo/başlık satırını, rozeti ve "Hızlı Başvur" butonunu (`ortak.css`, `ortak.js`) kullanır. Dikey, kare, yatay ve vurgulu yerleşimlerde aylık taksit öne çıkarılır.
+
+Modül görselleri 341 × 277 px görsel alanı için bu boyutta tasarlanıp 3 kat çözünürlükte (1023 × 831) üretilir. Oran alanla birebir aynı olduğu için modülde esnemez; yazı boyutları (`modul.css`) bu küçük alanda okunacak şekilde seçilmiştir.
 
 ## Yeni kart veya tutar değişikliği
 

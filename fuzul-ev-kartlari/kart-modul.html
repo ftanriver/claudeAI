@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Fuzul Ev Kart Modül</title>
+<link rel="stylesheet" href="ortak.css">
+<link rel="stylesheet" href="modul.css">
+<style>
+  /* Modül (341 × 277) için klasik liste yerleşimi. */
+  .rows { margin-top: 8px; }
+  .row { height: 30px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <img class="logo" src="assets/fuzul-logo.png" alt="fuzul">
+    <div class="brand"><h1>Fuzul Ev</h1><p>BDDK Lisanslı</p></div>
+    <div class="badge"><i data-ikon></i><span data-alan="rozet"></span></div>
+  </div>
+  <div class="rows">
+    <div class="row"><span class="k">Finans Bedeli</span><span class="v" data-alan="finansBedeli"></span></div>
+    <div class="row"><span class="k">Vade</span><span class="v" data-alan="vade"></span></div>
+    <div class="row"><span class="k">Taksit Tutarı</span><span class="v" data-alan="taksitTutari"></span></div>
+    <div class="row"><span class="k">Organizasyon Bedeli</span><span class="v" data-alan="organizasyonBedeli"></span></div>
+    <div class="row total"><span class="k">Toplam Ödeme</span><span class="v" data-alan="toplamOdeme"></span></div>
+  </div>
+  <div class="cta"><i data-ikon="kalkan"></i><span data-alan="buton"></span></div>
+</div>
+<script src="kartlar.js"></script>
+<script src="ortak.js"></script>
+</body>
+</html>
