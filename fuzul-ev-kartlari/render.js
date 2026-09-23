@@ -1,4 +1,5 @@
-// kartlar.js'deki her kartı cikti/<dosya>.png olarak dışa aktarır (2x, 1520 px genişlik).
+// kartlar.js'deki her kartı cikti/<dosya>-butonlu.png ve cikti/<dosya>-butonsuz.png
+// olarak dışa aktarır (2x, 1520 px genişlik).
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -18,12 +19,14 @@ const kartlar = sandbox.window.KARTLAR;
   const sablon = pathToFileURL(path.join(__dirname, "kart.html"));
 
   for (const kart of kartlar) {
-    sablon.search = "?kart=" + encodeURIComponent(kart.dosya);
-    await page.goto(sablon.href);
-    await page.evaluate(() => document.fonts.ready);
-    const out = path.join(outDir, kart.dosya + ".png");
-    await page.locator(".card").screenshot({ path: out });
-    console.log(out);
+    for (const buton of [true, false]) {
+      sablon.search = "?kart=" + encodeURIComponent(kart.dosya) + (buton ? "" : "&buton=0");
+      await page.goto(sablon.href);
+      await page.evaluate(() => document.fonts.ready);
+      const out = path.join(outDir, `${kart.dosya}-${buton ? "butonlu" : "butonsuz"}.png`);
+      await page.locator(".card").screenshot({ path: out });
+      console.log(out);
+    }
   }
 
   await browser.close();

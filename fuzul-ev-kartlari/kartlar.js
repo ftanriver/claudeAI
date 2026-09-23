@@ -1,4 +1,4 @@
-// Her kart için rozet, satırlar ve toplam. `dosya`, çıktı PNG adıdır.
+// Her kart için rozet, satırlar, toplam ve CTA buton metni. `dosya`, çıktı PNG adının başıdır.
 window.KARTLAR = [
   {
     dosya: "fuzul-ev-tasit-finansmani",
@@ -10,6 +10,7 @@ window.KARTLAR = [
       ["Organizasyon Bedeli", "₺ 70.000"],
     ],
     toplam: ["Toplam Ödeme", "₺ 1.070.000"],
+    buton: "Hızlı Başvur",
   },
   {
     dosya: "fuzul-ev-konut-finansmani",
@@ -21,5 +22,6 @@ window.KARTLAR = [
       ["Organizasyon Bedeli", "₺ 210.000"],
     ],
     toplam: ["Toplam Ödeme", "₺ 3.210.000"],
+    buton: "Hızlı Başvur",
   },
 ];
