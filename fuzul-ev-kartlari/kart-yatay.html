@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Fuzul Ev Kart Yatay</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+  /* Yatay yerleşim (16:9): 960 × 540 CSS px → 1920 × 1080 px. Geniş modüller için iki sütun. */
+  .card {
+    width: 960px; height: 540px; padding: 44px;
+    display: flex; flex-direction: column;
+  }
+  .body { flex: 1; margin-top: 30px; display: grid; grid-template-columns: 380px 1fr; gap: 44px; }
+  .sol { display: flex; flex-direction: column; }
+  .hero {
+    flex: 1; padding: 30px 32px; border-radius: 20px; background: #EFF9FA;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero .k { font-size: 21px; font-weight: 700; color: var(--teal); }
+  .hero .v { margin-top: 16px; font-size: 62px; font-weight: 700; line-height: 1; color: var(--ink-total); }
+  .cta { margin-top: 16px; height: 84px; }
+  .rows { display: flex; flex-direction: column; }
+  .row {
+    flex: 1; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .row span { position: relative; top: 2px; }
+  .row .k { font-size: 22px; color: var(--label); }
+  .row .v { font-size: 25px; font-weight: 700; color: var(--ink-value); }
+  .row.total { border-bottom: 0; }
+  .row.total .k { font-weight: 700; color: var(--label-total); }
+  .row.total .v { font-size: 30px; color: var(--ink-total); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <img class="logo" src="assets/fuzul-logo.png" alt="fuzul">
+    <div class="brand"><h1>Fuzul Ev</h1><p>BDDK Lisanslı</p></div>
+    <div class="badge"><i data-ikon></i><span data-alan="rozet"></span></div>
+  </div>
+  <div class="body">
+    <div class="sol">
+      <div class="hero">
+        <p class="k">Aylık Taksit</p>
+        <p class="v" data-alan="taksitTutari"></p>
+      </div>
+      <div class="cta"><i data-ikon="kalkan"></i><span data-alan="buton"></span></div>
+    </div>
+    <div class="rows">
+      <div class="row"><span class="k">Finans Bedeli</span><span class="v" data-alan="finansBedeli"></span></div>
+      <div class="row"><span class="k">Vade</span><span class="v" data-alan="vade"></span></div>
+      <div class="row"><span class="k">Organizasyon Bedeli</span><span class="v" data-alan="organizasyonBedeli"></span></div>
+      <div class="row total"><span class="k">Toplam Ödeme</span><span class="v" data-alan="toplamOdeme"></span></div>
+    </div>
+  </div>
+</div>
+<script src="kartlar.js"></script>
+<script src="ortak.js"></script>
+</body>
+</html>

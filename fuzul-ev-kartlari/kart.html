@@ -3,102 +3,42 @@
 <head>
 <meta charset="utf-8">
 <title>Fuzul Ev Kart</title>
+<link rel="stylesheet" href="ortak.css">
 <style>
-  /* Ölçüler referans görselden alındı: 1 CSS px = 2 görsel px (1520 px genişlik). */
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #fff; font-family: "FreeSans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
-  .card {
-    width: 760px; background: #fff;
-    border: 1px solid #E7EDF3; border-radius: 22px;
-    padding: 40.5px 44px 30px;
-  }
-  .head { display: flex; align-items: center; height: 109px; }
-  .logo { display: block; width: 233px; height: 109px; }
-  .brand { margin-left: 22px; }
-  /* top: metinleri referanstaki taban çizgilerine oturtan dikey ince ayar */
-  .brand h1, .brand p, .badge span, .row span { position: relative; }
-  .brand h1 { font-size: 34.5px; font-weight: 700; line-height: 1.2; color: #16202B; top: 3.5px; }
-  .brand p { font-size: 21.5px; line-height: 1.2; color: #7B8895; margin-top: 4px; top: 1px; }
-  .badge {
-    margin-left: auto; height: 46px; padding: 0 18px; border-radius: 23px;
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #E2F6F8; color: #0B8993;
-    font-size: 19.5px; font-weight: 700; white-space: nowrap;
-  }
-  .badge svg { width: 22px; height: 22px; flex: none; }
-  .badge span { top: 1px; }
+  /* Klasik yerleşim: referans görselin birebir karşılığı (760 × 708 CSS px, butonsuz 574). */
+  .card { width: 760px; padding: 40.5px 44px 30px; }
+  .card:has(.cta) { padding-bottom: 44px; }
   .rows { margin-top: 33.5px; }
   .row {
-    height: 72px; border-bottom: 1px solid #EAEFF4;
+    height: 72px; border-bottom: 1px solid var(--line);
     display: flex; align-items: center; justify-content: space-between;
   }
-  .row .k { font-size: 23.5px; color: #5B6673; top: 1px; }
-  .row .v { font-size: 24.5px; font-weight: 700; color: #1A242F; top: 2px; }
+  .row span { position: relative; }
+  .row .k { font-size: 23.5px; color: var(--label); top: 1px; }
+  .row .v { font-size: 24.5px; font-weight: 700; color: var(--ink-value); top: 2px; }
   .row.total { height: 71px; border-bottom: 0; }
-  .row.total .k { font-size: 23px; font-weight: 700; color: #3D4854; top: 2px; }
-  .row.total .v { font-size: 28.5px; color: #0F1822; top: 3px; }
-  .card:has(.cta) { padding-bottom: 44px; }
-  .cta {
-    margin-top: 28px; height: 92px; border-radius: 15px;
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-    background: #F26722; color: #fff;
-    font-size: 26.5px; font-weight: 700;
-  }
-  .cta svg { width: 31px; height: 31px; flex: none; }
-  .cta span { position: relative; top: 3.5px; }
+  .row.total .k { font-size: 23px; font-weight: 700; color: var(--label-total); top: 2px; }
+  .row.total .v { font-size: 28.5px; color: var(--ink-total); top: 3px; }
+  .cta { margin-top: 28px; }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="head">
     <img class="logo" src="assets/fuzul-logo.png" alt="fuzul">
-    <div class="brand">
-      <h1>Fuzul Ev</h1>
-      <p>BDDK Lisanslı</p>
-    </div>
-    <div class="badge" id="badge"></div>
+    <div class="brand"><h1>Fuzul Ev</h1><p>BDDK Lisanslı</p></div>
+    <div class="badge"><i data-ikon></i><span data-alan="rozet"></span></div>
   </div>
-  <div class="rows" id="rows"></div>
-  <div class="cta" id="cta"></div>
+  <div class="rows">
+    <div class="row"><span class="k">Finans Bedeli</span><span class="v" data-alan="finansBedeli"></span></div>
+    <div class="row"><span class="k">Vade</span><span class="v" data-alan="vade"></span></div>
+    <div class="row"><span class="k">Taksit Tutarı</span><span class="v" data-alan="taksitTutari"></span></div>
+    <div class="row"><span class="k">Organizasyon Bedeli</span><span class="v" data-alan="organizasyonBedeli"></span></div>
+    <div class="row total"><span class="k">Toplam Ödeme</span><span class="v" data-alan="toplamOdeme"></span></div>
+  </div>
+  <div class="cta"><i data-ikon="kalkan"></i><span data-alan="buton"></span></div>
 </div>
 <script src="kartlar.js"></script>
-<script>
-  // Lucide ikonları (ISC lisansı): "car", "house" ve "shield-check"
-  const IKONLAR = {
-    tasit: '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
-    konut: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
-    kalkan: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
-  };
-  const svg = ikon => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IKONLAR[ikon]}</svg>`;
-
-  // ?kart=<dosya> kartı seçer, &buton=0 CTA butonunu gizler.
-  const params = new URLSearchParams(location.search);
-  const kart = KARTLAR.find(k => k.dosya === params.get("kart")) || KARTLAR[0];
-
-  const badge = document.getElementById("badge");
-  badge.innerHTML = svg(kart.rozet.ikon) + "<span></span>";
-  badge.querySelector("span").textContent = kart.rozet.metin;
-
-  const satir = ([etiket, deger], sinif) => {
-    const el = document.createElement("div");
-    el.className = sinif;
-    el.innerHTML = '<span class="k"></span><span class="v"></span>';
-    el.children[0].textContent = etiket;
-    el.children[1].textContent = deger;
-    return el;
-  };
-  document.getElementById("rows").append(
-    ...kart.satirlar.map(s => satir(s, "row")),
-    satir(kart.toplam, "row total"),
-  );
-
-  const cta = document.getElementById("cta");
-  if (kart.buton && params.get("buton") !== "0") {
-    cta.innerHTML = svg("kalkan") + "<span></span>";
-    cta.querySelector("span").textContent = kart.buton;
-  } else {
-    cta.remove();
-  }
-</script>
+<script src="ortak.js"></script>
 </body>
 </html>

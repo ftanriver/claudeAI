@@ -1,29 +1,34 @@
-// kartlar.js'deki her kartı cikti/<dosya>-butonlu.png ve cikti/<dosya>-butonsuz.png
-// olarak dışa aktarır (2x, 1520 px genişlik).
+// kartlar.js'deki her kart için aşağıdaki görselleri cikti/ klasörüne üretir (2x çözünürlük).
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 const { pathToFileURL } = require("url");
 const { chromium } = require("playwright");
 
+const GORSELLER = [
+  { sablon: "kart.html", cikti: "{dosya}-butonlu.png" },
+  { sablon: "kart.html", sorgu: "&buton=0", cikti: "{dosya}-butonsuz.png" },
+  { sablon: "kart-dikey.html", cikti: "alternatifler/{dosya}-dikey.png" },
+  { sablon: "kart-kare.html", cikti: "alternatifler/{dosya}-kare.png" },
+  { sablon: "kart-yatay.html", cikti: "alternatifler/{dosya}-yatay.png" },
+];
+
 const sandbox = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, "kartlar.js"), "utf8"), sandbox);
 const kartlar = sandbox.window.KARTLAR;
 
 (async () => {
-  const outDir = path.join(__dirname, "cikti");
-  fs.mkdirSync(outDir, { recursive: true });
-
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 800, height: 800 }, deviceScaleFactor: 2 });
-  const sablon = pathToFileURL(path.join(__dirname, "kart.html"));
+  const page = await browser.newPage({ viewport: { width: 1000, height: 1000 }, deviceScaleFactor: 2 });
 
   for (const kart of kartlar) {
-    for (const buton of [true, false]) {
-      sablon.search = "?kart=" + encodeURIComponent(kart.dosya) + (buton ? "" : "&buton=0");
-      await page.goto(sablon.href);
+    for (const g of GORSELLER) {
+      const url = pathToFileURL(path.join(__dirname, g.sablon));
+      url.search = "?kart=" + encodeURIComponent(kart.dosya) + (g.sorgu || "");
+      await page.goto(url.href);
       await page.evaluate(() => document.fonts.ready);
-      const out = path.join(outDir, `${kart.dosya}-${buton ? "butonlu" : "butonsuz"}.png`);
+      const out = path.join(__dirname, "cikti", g.cikti.replace("{dosya}", kart.dosya));
+      fs.mkdirSync(path.dirname(out), { recursive: true });
       await page.locator(".card").screenshot({ path: out });
       console.log(out);
     }

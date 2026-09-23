@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Fuzul Ev Kart Kare</title>
+<link rel="stylesheet" href="ortak.css">
+<style>
+  /* Kare yerleşim (1:1): 760 × 760 CSS px → 1520 × 1520 px. Değerler kutucuklarda. */
+  .card {
+    width: 760px; height: 760px; padding: 44px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .tile { padding: 28px 28px 30px; border-radius: 18px; background: #F4F7FA; }
+  .tile .k { font-size: 20px; color: var(--label); }
+  .tile .v { margin-top: 14px; font-size: 38px; font-weight: 700; line-height: 1; color: var(--ink-value); }
+  .tile.vurgu { background: #EFF9FA; }
+  .tile.vurgu .k { font-weight: 700; color: var(--teal); }
+  .tile.vurgu .v { color: var(--ink-total); }
+  .total {
+    margin-top: 14px; height: 84px; padding: 0 28px; border-radius: 18px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .total span { position: relative; top: 2px; }
+  .total .k { font-size: 23px; font-weight: 700; color: var(--label-total); }
+  .total .v { font-size: 32px; font-weight: 700; color: var(--ink-total); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <img class="logo" src="assets/fuzul-logo.png" alt="fuzul">
+    <div class="brand"><h1>Fuzul Ev</h1><p>BDDK Lisanslı</p></div>
+    <div class="badge"><i data-ikon></i><span data-alan="rozet"></span></div>
+  </div>
+  <div>
+    <div class="tiles">
+      <div class="tile vurgu"><p class="k">Aylık Taksit</p><p class="v" data-alan="taksitTutari"></p></div>
+      <div class="tile"><p class="k">Vade</p><p class="v" data-alan="vade"></p></div>
+      <div class="tile"><p class="k">Finans Bedeli</p><p class="v" data-alan="finansBedeli"></p></div>
+      <div class="tile"><p class="k">Organizasyon Bedeli</p><p class="v" data-alan="organizasyonBedeli"></p></div>
+    </div>
+    <div class="total"><span class="k">Toplam Ödeme</span><span class="v" data-alan="toplamOdeme"></span></div>
+  </div>
+  <div class="cta"><i data-ikon="kalkan"></i><span data-alan="buton"></span></div>
+</div>
+<script src="kartlar.js"></script>
+<script src="ortak.js"></script>
+</body>
+</html>
