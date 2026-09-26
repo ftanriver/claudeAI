@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Akış ve Kurallar · TamirPort</title>
+<meta name="description" content="Hasar talebinden güvenli ödemeye kadar uçtan uca akış, açık noktalar ve karşılıklı kurallar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow+Semi+Condensed:wght@500;600;700&family=Figtree:wght@400..700&display=swap">
+<link rel="stylesheet" href="assets/css/temel.css">
+<link rel="stylesheet" href="assets/css/akis.css">
+</head>
+<body>
+<div id="proto-serit" data-sayfa="akis"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="TamirPort ana sayfa"><i data-logo></i><span>Tamir<b>Port</b></span></a>
+    <div class="header-actions">
+      <a class="btn btn-secondary hide-sm" href="talep.html"><i data-ikon="inbox"></i>Teklif takip</a>
+      <a class="btn btn-primary" href="index.html#teklif-al">Prototipi dene</a>
+    </div>
+  </div>
+</header>
+
+<section class="akis-ust">
+  <div class="wrap">
+    <p class="eyebrow">Ürün akışı · v0.1 taslak</p>
+    <h1>Akış, açık noktalar ve karşılıklı kurallar</h1>
+    <p class="lead">Hasar talebinden güvenli ödemeye kadar her adımın kim tarafından, hangi ekranda ve hangi kuralla yapıldığı. Süreler ve oranlar önerilen varsayılanlardır; onay bekleyen kararlar aşağıda ayrıca listelendi.</p>
+  </div>
+</section>
+
+<div class="wrap dok">
+  <nav class="icindekiler" aria-label="İçindekiler">
+    <b>İçindekiler</b>
+    <a href="#ozet">Kısa özet</a>
+    <a href="#akis">Uçtan uca akış</a>
+    <a href="#teklifler">Teklifler nerede gösterilir?</a>
+    <a href="#durumlar">Talep durumları</a>
+    <a href="#acik-noktalar">Açık noktalar</a>
+    <a href="#kurallar">Karşılıklı kurallar</a>
+    <a href="#kararlar">Onay bekleyen kararlar</a>
+    <a href="#fazlar">Faz planı</a>
+    <a href="#ekranlar">Prototip ekranları</a>
+  </nav>
+
+  <div class="dok-icerik">
+    <section class="dok-bolum" id="ozet" aria-labelledby="ozet-b">
+      <h2 id="ozet-b">Kısa özet</h2>
+      <div class="ozet-kartlari">
+        <div class="ozet-kart"><i data-ikon="smartphone"></i><b>Üyelik şartı yok</b><p>Misafir kullanıcı telefon + SMS kodu ile şifresiz bir kimlik edinir. Üyelik bu kimliğe e-posta, araç ve fatura bilgisi eklemektir.</p></div>
+        <div class="ozet-kart"><i data-ikon="inbox"></i><b>Teklifler Teklif Takip sayfasında</b><p>SMS kodundan sonra otomatik açılır, linki SMS ile gider, başka cihazdan Tekliflerim + SMS koduyla girilir.</p></div>
+        <div class="ozet-kart"><i data-ikon="scale"></i><b>Fotoğrafla verilen fiyat ön tekliftir</b><p>Kesin fiyat araç görülünce netleşir. Dükkanın tek revize hakkı vardır; müşteri reddedip aracını ücretsiz geri alabilir.</p></div>
+        <div class="ozet-kart"><i data-ikon="credit-card"></i><b>Ödeme kesin fiyat onayında alınır</b><p>Seçimde değil. Onarım, ödeme güvenceye alınmadan başlamaz.</p></div>
+        <div class="ozet-kart"><i data-ikon="lock"></i><b>Para ödeme kuruluşunda bekler</b><p>Karşılıklı onayla ya da teslimden 72 saat sonra otomatik olarak dükkana aktarılır; komisyon aktarımda düşülür.</p></div>
+        <div class="ozet-kart"><i data-ikon="key-round"></i><b>Kritik anlar kodla kayıtlı</b><p>İletişim bilgileri seçimden sonra açılır. Teslim ve teslim alma, müşterinin ekranındaki 4 haneli kodla kayda geçer.</p></div>
+      </div>
+    </section>
+
+    <section class="dok-bolum" id="akis" aria-labelledby="akis-b">
+      <h2 id="akis-b">Uçtan uca akış</h2>
+      <p>Mutlu yol. Her adımın yanında o adımı gösteren prototip ekranı var.</p>
+      <ol class="akis-listesi">
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Hasar tespit formunu doldurur: <b>araç</b> (marka, model, yıl, paket) → <b>hasar</b> (kategori, fotoğraf, açıklama) → <b>iletişim</b> (ad, soyad, telefon, il/ilçe, KVKK onayı).</p></div><a href="index.html#teklif-al">Ana sayfa<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>SMS ile gelen 6 haneli kodu girer. Talep yayına girer, talep numarası oluşur, takip linki SMS ile gönderilir.</p></div><a href="index.html#teklif-al">Ana sayfa<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-sistem">Sistem</span><p>Talebi, seçilen kategorilerden en az birine hizmet veren ve bölgesi talebin ilçesini kapsayan onaylı dükkanlara iletir. Dükkanlar müşterinin adını ve telefonunu görmez.</p></div><a href="dukkan-paneli.html#talepler">Dükkan paneli<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>24 saat içinde kapalı zarf teklif verir: tutar (KDV dahil), süre, parça türü, garanti, kapsam, not. Formda komisyon ve net hakediş anında hesaplanır.</p></div><a href="dukkan-paneli.html#talepler">Dükkan paneli<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Teklifleri fiyat, puan, mesafe, süre, parça türü ve garantiye göre karşılaştırır ve birini seçer.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-iki">İki taraf</span><p>Seçimle adres, konum ve telefon müşteriye; ad ve telefon dükkana açılır. Müşteri randevu seçer ve ekranında 4 haneli <b>teslim kodu</b> görünür.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>Aracı teslim alırken kodu girer; aracın 4 yönden fotoğrafını, kilometresini ve yakıt seviyesini kaydeder.</p></div><a href="dukkan-paneli.html#isler">Aktif işler<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>Aracı inceler, <b>kesin fiyatı</b> girer: ön teklif geçerli ya da gerekçeli ve fotoğraflı revize.</p></div><a href="dukkan-paneli.html#isler">Aktif işler<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Kesin fiyatı onaylar ve kartla öder (taksit seçenekli). Para bloke edilir, durum <b>ödeme güvende</b> olur, onarım başlar.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-iki">İki taraf</span><p>Ek iş çıkarsa dükkan platformdan talep açar; müşteri onaylarsa ek ödeme de bloke edilir.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>Onarımı tamamlar: sonrası fotoğraflarını ve faturayı yükler. Müşteriye SMS gider.</p></div><a href="dukkan-paneli.html#isler">Aktif işler<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-iki">İki taraf</span><p>Müşteri aracı kontrol ederek teslim alır; dükkan <b>teslim alma kodunu</b> girer ve 72 saatlik onay süresi başlar.</p></div><a href="dukkan-paneli.html#isler">Aktif işler<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p><b>Onaylıyorum</b> der ya da 72 saat içinde sorun bildirmez. Ödeme, komisyon düşülerek T+1 iş günü içinde dükkana aktarılır.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Dükkanı puanlar ve yorum yazar. Firma puanı ve puan tablosu güncellenir.</p></div><a href="index.html#puanlar">Puan tablosu<i data-ikon="arrow-up-right"></i></a></li>
+      </ol>
+    </section>
+
+    <section class="dok-bolum" id="teklifler" aria-labelledby="teklifler-b">
+      <h2 id="teklifler-b">Teklifler nerede gösterilir?</h2>
+      <div class="karar-kutusu"><b>Karar: her talebin kendine ait bir Teklif Takip sayfası olur.</b><p>Müşteri akışın her adımını burada görür: teklifler, seçim, randevu, ödeme, onay ve değerlendirme. Misafir ya da üye fark etmez.</p></div>
+      <div class="erisim">
+        <div class="erisim-kart"><i data-ikon="circle-check"></i><b>Otomatik yönlendirme</b><p>SMS kodu doğrulanınca başarı ekranından Teklif Takip'e geçilir. Aynı cihazda oturum 30 gün açık kalır.</p></div>
+        <div class="erisim-kart"><i data-ikon="message-square-text"></i><b>SMS linki</b><p>Kısa ve tahmin edilemez bir bağlantı gönderilir (ör. tamirport.com/t/7KQ2MX).</p></div>
+        <div class="erisim-kart"><i data-ikon="inbox"></i><b>Tekliflerim butonu</b><p>Header'da sürekli görünür. Telefon + SMS kodu ile o numaranın talepleri listelenir.</p></div>
+        <div class="erisim-kart"><i data-ikon="bell"></i><b>Aktif talep bandı</b><p>Ana sayfaya dönen kullanıcı "Talebin için 4 teklif geldi" bandını görür.</p></div>
+        <div class="erisim-kart"><i data-ikon="layout-dashboard"></i><b>Müşteri Paneli</b><p>Üye olunca aynı telefonla açılmış tüm talepler Taleplerim'e otomatik bağlanır.</p></div>
+      </div>
+      <ul class="kural-listesi">
+        <li><i data-ikon="lock"></i><span>Link yalnızca görüntüleme yetkisi verir. Seçim, ödeme, onay ve itiraz için cihazda oturum yoksa SMS kodu istenir. Linkli sayfada ad ve telefon gösterilmez.</span></li>
+        <li><i data-ikon="smartphone"></i><span>SMS yalnızca kritik anlarda gider: ilk teklif, teklif özeti, randevu hatırlatması, kesin fiyat, onarımın bitmesi, otomatik onaydan 24 saat önce. Her teklif için ayrı SMS gönderilmez.</span></li>
+        <li><i data-ikon="user-check"></i><span>Üyelik talep tamamlandığında önerilir: "Aracını kaydet, bir dahaki sefere tek tıkla teklif al".</span></li>
+      </ul>
+    </section>
+
+    <section class="dok-bolum" id="durumlar" aria-labelledby="durumlar-b">
+      <h2 id="durumlar-b">Talep durumları</h2>
+      <div class="durum-zinciri">
+        <div class="durum"><code>YAYINDA</code><b>Teklifler geliyor</b><small>24 sa toplama + 72 sa seçim</small></div><i data-ikon="chevron-right" class="ok"></i>
+        <div class="durum"><code>SECILDI</code><b>Dükkan seçildi</b><small>Randevudan sonra 2 gün</small></div><i data-ikon="chevron-right" class="ok"></i>
+        <div class="durum"><code>ARAC_DUKKANDA</code><b>Kesin fiyat</b><small>Dükkan 24 sa, müşteri 48 sa</small></div><i data-ikon="chevron-right" class="ok"></i>
+        <div class="durum"><code>ODEME_GUVENDE</code><b>Onarımda</b><small>Teklifteki tahmini süre</small></div><i data-ikon="chevron-right" class="ok"></i>
+        <div class="durum"><code>ONAY_BEKLIYOR</code><b>Karşılıklı onay</b><small>Teslimden sonra 72 sa</small></div><i data-ikon="chevron-right" class="ok"></i>
+        <div class="durum"><code>TAMAMLANDI</code><b>Ödeme aktarıldı</b><small>30 gün değerlendirme</small></div>
+      </div>
+      <div class="durum-zinciri">
+        <div class="durum yan"><code>ITIRAZ</code><b>Sorun bildirildi</b><small>Ödeme bekler · hedef 7 iş günü</small></div>
+        <div class="durum yan"><code>IPTAL</code><b>Kapandı</b><small>Seçimden önce ya da revize reddiyle</small></div>
+        <div class="durum yan"><code>SURESI_DOLDU</code><b>Teklif/seçim yok</b><small>Tek tıkla yeniden yayınlanır</small></div>
+      </div>
+      <p><b>Teklif:</b> Beklemede → (Güncellendi) → Seçildi · Seçilmedi · Geri çekildi · Süresi doldu. <b>Ödeme:</b> Yok → Güvende (bloke) → Aktarıldı · İade · Kısmi iade; ek iş için ayrı ek ödeme kaydı.</p>
+    </section>
+
+    <section class="dok-bolum" id="acik-noktalar" aria-labelledby="acik-b">
+      <h2 id="acik-b">Açık noktalar ve önerilen çözümler</h2>
+      <p>Brief'te tanımlı olmayan ya da riskli görülen noktalar.</p>
+      <div class="tablo-kap"><table class="dok-tablo">
+        <thead><tr><th>#</th><th>Tespit</th><th>Öneri</th></tr></thead>
+        <tbody>
+          <tr><td class="no">1</td><td>Formda konum yok; talepler bölgeye göre dağıtılamaz</td><td>İl + ilçe zorunlu. Dükkanın hizmet yarıçapıyla eşleştirilir.</td></tr>
+          <tr><td class="no">2</td><td>KVKK ve ticari ileti izinleri tanımlı değil</td><td>Aydınlatma metni ve paylaşım için açık rıza zorunlu; ticari SMS izni ayrı ve opsiyonel (İYS).</td></tr>
+          <tr><td class="no">3</td><td>Paket zorunlu ama kullanıcı çoğu zaman bilmiyor</td><td>"Bilmiyorum" seçeneği; Faz 2'de plaka/şasi no ile otomatik doldurma.</td></tr>
+          <tr><td class="no">4</td><td>Bir hasar birden fazla kategoriye girebilir</td><td>Çoklu seçim; işin tamamını kapsamayan teklifler "Kısmi teklif" etiketiyle, tam kapsayanlar önce listelenir.</td></tr>
+          <tr><td class="no">5</td><td>Misafir kullanıcı teklifleri nerede görecek?</td><td>Teklif Takip sayfası; SMS linki; Tekliflerim + SMS kodu; üyelikte Müşteri Paneli.</td></tr>
+          <tr><td class="no">6</td><td>Fotoğrafla kesin fiyat verilemez; sürpriz fiyat güveni bozar</td><td>Ön teklif + kesin fiyat adımı, tek revize hakkı, müşterinin ret hakkı, dükkan kartında teklife sadakat oranı.</td></tr>
+          <tr><td class="no">7</td><td>Ödemenin ne zaman alınacağı belirsiz</td><td>Kesin fiyat onaylandığında, araç dükkandayken. Seçimde alınırsa revizelerde iade ve ek tahsilat karmaşası doğar.</td></tr>
+          <tr><td class="no">8</td><td>Ödemenin "firmada işletilmesi"</td><td>Başkası adına fon toplamak ve tutmak 6493 sayılı Kanun kapsamında lisans gerektirir. Lisanslı ödeme kuruluşunun pazaryeri çözümü önerilir; bekleyen para nemalandırılmaz. Hukuk ve mali müşavir teyidi şart.</td></tr>
+          <tr><td class="no">9</td><td>Onay verilmezse para askıda kalır</td><td>Teslim alma kodu + 72 saat sonra otomatik onay + 24 saat kala hatırlatma.</td></tr>
+          <tr><td class="no">10</td><td>Uyuşmazlık süreci tanımsız</td><td>Önce dükkana 48 saat çözüm hakkı, sonra arabuluculuk, gerekirse bağımsız eksper.</td></tr>
+          <tr><td class="no">11</td><td>Onarım sırasında ek iş çıkabilir</td><td>Yalnızca platformdan ek iş talebi + müşteri onayı + ek ödeme.</td></tr>
+          <tr><td class="no">12</td><td>Komisyon modeli belirsiz</td><td>Müşteri teklifteki tutarı öder; komisyon (başlangıç önerisi %10) dükkan hakedişinden düşülür.</td></tr>
+          <tr><td class="no">13</td><td>Fatura kimden kime?</td><td>Dükkan tam tutarın faturasını müşteriye keser ve tamamlama adımında yükler; TamirPort dükkana komisyon faturası keser.</td></tr>
+          <tr><td class="no">14</td><td>İletişim alınıp platform dışında anlaşılması</td><td>İletişim seçimden sonra açılır; teklif notunda telefon/IBAN engellenir; güvence, garanti ve puan yalnızca platform içi işlerde.</td></tr>
+          <tr><td class="no">15</td><td>Dükkan kabul kriterleri yok</td><td>Vergi levhası, oda/sicil kaydı, adres ve fotoğraf, IBAN, ödeme kuruluşu KYC'si, en az 6 ay işçilik garantisi.</td></tr>
+          <tr><td class="no">16</td><td>Puan manipülasyonu ve ilk günlerde puan olmaması</td><td>Yalnızca tamamlanan işler puanlanır; Bayes ortalaması; tabloya girmek için en az 5 değerlendirme.</td></tr>
+          <tr><td class="no">17</td><td>Kasko/sigorta ile yapılan onarımlar</td><td>Faz 1 kapsam dışı (SSS'de belirtildi); Faz 2'de eksper/sigorta entegrasyonu.</td></tr>
+          <tr><td class="no">18</td><td>Araç yürümüyorsa ne olacak?</td><td>Formda "Araç yürür durumda değil" seçeneği; dükkan teklifinde çekici hizmetini belirtir.</td></tr>
+          <tr><td class="no">19</td><td>Faz 1 yalnızca landing mi?</td><td>Modül teklif vaat ettiği için Faz 1'de en az talep → teklif → seçim döngüsü ve dükkanın teklif ekranı çalışmalı.</td></tr>
+          <tr><td class="no">20</td><td>Fotoğraflarda kişisel veri (plaka, konum)</td><td>EXIF/konum silinir; Faz 2'de otomatik plaka bulanıklaştırma.</td></tr>
+          <tr><td class="no">21</td><td>Sahte ve spam talepler</td><td>SMS kodu, telefon başına en fazla 3 aktif talep, sık iptalde ek doğrulama.</td></tr>
+          <tr><td class="no">22</td><td>Marka logoları</td><td>Logo kullanımı marka sahiplerinin kurallarına tabi; prototipte yazı olarak gösterildi.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="dok-bolum" id="kurallar" aria-labelledby="kurallar-b">
+      <h2 id="kurallar-b">Karşılıklı kurallar</h2>
+      <p>Önerilen varsayılanlar. Tüm süre ve oranlar yönetim panelinden ayarlanabilir olmalı.</p>
+      <div class="kural-gruplari">
+        <section class="kural-grubu"><h3><i data-ikon="scale"></i>Genel</h3><ol>
+          <li><code>G1</code><span>TamirPort aracı platformdur; onarım hizmetinin sağlayıcısı dükkandır.</span></li>
+          <li><code>G2</code><span>Tutarlar TL ve KDV dahildir. Müşterinin teklifte gördüğü tutar ödeyeceği tutardır; komisyon dükkan hakedişinden düşülür.</span></li>
+          <li><code>G3</code><span>Platformdan gelen işler için platform dışında ödeme alınamaz, ek ücret istenemez.</span></li>
+          <li><code>G4</code><span>Adres ve telefon yalnızca seçimden sonra, karşılıklı olarak görünür.</span></li>
+          <li><code>G5</code><span>Teslim, kesin fiyat, ödeme, tamamlama, teslim alma ve onay zaman damgası ve fotoğrafla kayda geçer; uyuşmazlıkta esas alınır.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="car-front"></i>Talep (müşteri)</h3><ol>
+          <li><code>T1</code><span>Talep yalnızca SMS kodu doğrulanınca yayınlanır.</span></li>
+          <li><code>T2</code><span>Bir telefonla aynı anda en fazla 3 aktif talep açılabilir.</span></li>
+          <li><code>T3</code><span>Teklif toplama süresi <b>24 saattir</b>; müşteri daha önce de seçebilir.</span></li>
+          <li><code>T4</code><span>Toplama bittikten sonra 72 saat içinde seçim yapılmazsa talep "Süresi doldu" olur.</span></li>
+          <li><code>T5</code><span>Dükkan seçene kadar ve seçimden sonra aracı teslim edene kadar iptal ücretsizdir.</span></li>
+          <li><code>T6</code><span>Talep yayındayken fotoğraf ve açıklama eklenebilir; teklif veren dükkanlara bildirilir.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="store"></i>Teklif (dükkan)</h3><ol>
+          <li><code>D1</code><span>Talep, kategorilerden en az birine hizmet veren ve bölgesi ilçeyi kapsayan onaylı dükkanlara düşer.</span></li>
+          <li><code>D2</code><span>Teklif aşamasında dükkan müşterinin adını ve telefonunu görmez.</span></li>
+          <li><code>D3</code><span>Teklifler kapalı zarftır; dükkanlar yalnızca teklif sayısını görür.</span></li>
+          <li><code>D4</code><span>Zorunlu alanlar: tutar, süre, parça türü, işçilik garantisi, kapsam.</span></li>
+          <li><code>D5</code><span>Teklif 7 gün geçerlidir; seçime kadar bir kez güncellenebilir ya da geri çekilebilir.</span></li>
+          <li><code>D6</code><span>Bilgi yetersizse dükkan hazır sorularla ek fotoğraf veya bilgi isteyebilir.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="key-round"></i>Seçim ve teslim</h3><ol>
+          <li><code>S1</code><span>Müşteri tek teklif seçer; diğerleri "Seçilmedi" olur ve bildirilir.</span></li>
+          <li><code>S2</code><span>Randevu, dükkanın takviminde açık saatlerden seçilir; seçim dükkan için bağlayıcıdır.</span></li>
+          <li><code>S3</code><span>Araç randevudan sonraki 2 gün içinde teslim edilmezse seçim düşer, diğer teklifler yeniden açılır.</span></li>
+          <li><code>S4</code><span>Teslimde dükkan müşterinin <b>teslim kodunu</b> girer; 4 yön fotoğraf, km ve yakıt kaydeder.</span></li>
+          <li><code>S5</code><span>Söküm gerektiren inceleme müşterinin onayı olmadan yapılamaz.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="credit-card"></i>Kesin fiyat ve ödeme</h3><ol>
+          <li><code>O1</code><span>Dükkan kesin fiyatı teslimden sonra 24 saat içinde girer.</span></li>
+          <li><code>O2</code><span>Revize <b>yalnızca bir kez</b>, gerekçe ve fotoğrafla yapılır ve müşteri onayına tabidir.</span></li>
+          <li><code>O3</code><span>Revize reddedilirse araç ücretsiz geri verilir (onaylı söküm yapıldıysa beyan edilen söküm-montaj bedeli hariç).</span></li>
+          <li><code>O4</code><span><b>Onarım, ödeme güvenceye alınmadan başlamaz.</b></span></li>
+          <li><code>O5</code><span>Ödeme 3D Secure ile alınır, lisanslı ödeme kuruluşunda bloke tutulur; taksit farkı müşteriye yansır.</span></li>
+          <li><code>O6</code><span>Ek iş yalnızca platformdan talep edilir; onaylanırsa ek ödeme de bloke edilir.</span></li>
+          <li><code>O7</code><span>Komisyon toplam tutar üzerinden hesaplanır. Örnek: 12.450 ₺ → %10 = 1.245 ₺ → dükkana 11.205 ₺.</span></li>
+          <li><code>O8</code><span>Fatura yüklenmeden onarım tamamlandı olarak bildirilemez.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="clipboard-check"></i>Tamamlama ve karşılıklı onay</h3><ol>
+          <li><code>K1</code><span>Dükkan tamamlarken sonrası fotoğraflarını ve faturayı yükler; müşteriye SMS gider.</span></li>
+          <li><code>K2</code><span>Dükkan, müşterinin <b>teslim alma kodunu</b> girerek aracı teslim eder.</span></li>
+          <li><code>K3</code><span>Müşteri "Onaylıyorum" deyince ödeme T+1 iş günü içinde dükkana aktarılır.</span></li>
+          <li><code>K4</code><span>Teslimden sonra <b>72 saat</b> içinde onay ya da itiraz yoksa ödeme otomatik onaylanır.</span></li>
+          <li><code>K5</code><span>Onay geri alınamaz; sonradan çıkan sorunlar garanti talebiyle ilerler.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="flag"></i>Uyuşmazlık ve garanti</h3><ol>
+          <li><code>I1</code><span>Müşteri onay süresi içinde gerekçe ve fotoğrafla sorun bildirebilir; ödeme bloke kalır.</span></li>
+          <li><code>I2</code><span>İlk 48 saat dükkanındır: düzeltme veya kısmi iade önerir.</span></li>
+          <li><code>I3</code><span>Anlaşma olmazsa TamirPort arabuluculuk yapar; gerekirse bağımsız eksper (ücreti haksız çıkan tarafa ait). Hedef 7 iş günü.</span></li>
+          <li><code>I4</code><span>Sonuç: tam ödeme, yeniden işlem, kısmi iade ya da tam iade.</span></li>
+          <li><code>I5</code><span>Garanti talebine dükkan 3 iş günü içinde yanıt verir; uymayan dükkanın üyeliği askıya alınır.</span></li>
+        </ol></section>
+        <section class="kural-grubu"><h3><i data-ikon="star"></i>Değerlendirme ve puan</h3><ol>
+          <li><code>P1</code><span>Yalnızca tamamlanan işler, 30 gün içinde değerlendirilebilir ("Doğrulanmış iş").</span></li>
+          <li><code>P2</code><span>Genel puan + işçilik, fiyat/performans, zamanında teslim, iletişim.</span></li>
+          <li><code>P3</code><span>Dükkan her yoruma bir kez yanıt verebilir; yorumlar silinemez, moderasyon vardır.</span></li>
+          <li><code>P4</code><span>Firma puanı Bayes ortalamasıdır; tabloya girmek için en az 5 değerlendirme gerekir.</span></li>
+          <li><code>P5</code><span>"Önerilen" sıralaması fiyat, puan, mesafe, teklife sadakat ve yanıt hızının birleşimidir.</span></li>
+          <li><code>P6</code><span>Dükkanın müşteriyi değerlendirmesi herkese açık değildir; güven skorunda kullanılır.</span></li>
+        </ol></section>
+        <section class="kural-grubu genis"><h3><i data-ikon="ban"></i>Vazgeçme ve yaptırımlar</h3><ol>
+          <li><code>V1</code><span><b>Seçimden önce:</b> müşteri ücretsiz iptal eder; dükkan teklifini serbestçe geri çeker.</span></li>
+          <li><code>V2</code><span><b>Seçimden sonra, teslimden önce:</b> müşteri ücretsiz iptal eder (90 günde 2 kez randevuya gelmezse güven skoru düşer); dükkan iptal ederse ceza puanı alır ve diğer teklifler müşteriye yeniden açılır.</span></li>
+          <li><code>V3</code><span><b>Araç dükkanda, ödemeden önce:</b> müşteri aracını ücretsiz geri alır (onaylı söküm bedeli hariç).</span></li>
+          <li><code>V4</code><span><b>Ödemeden sonra:</b> iptal yalnızca itiraz veya operasyon üzerinden; yapılan iş belgelenir.</span></li>
+          <li><code>V5</code><span>Dükkan: 90 günde 3 ceza puanı → listelemede geri sıraya düşme. Platform dışı ödeme: 1. uyarı, 2. 30 gün askı, 3. üyelik iptali.</span></li>
+        </ol></section>
+      </div>
+    </section>
+
+    <section class="dok-bolum" id="kararlar" aria-labelledby="kararlar-b">
+      <h2 id="kararlar-b">Onayınızı bekleyen kararlar</h2>
+      <div class="tablo-kap"><table class="dok-tablo">
+        <thead><tr><th>Karar</th><th>Önerimiz</th><th>Alternatifler</th></tr></thead>
+        <tbody>
+          <tr><td>Komisyon oranı ve kimden</td><td>%10, dükkan hakedişinden</td><td>Kategori bazlı oran · müşteriden ayrıca hizmet bedeli</td></tr>
+          <tr><td>Ödeme anı</td><td>Kesin fiyat onayında</td><td>Seçimde kart provizyonu</td></tr>
+          <tr><td>Ödeme altyapısı</td><td>Lisanslı ödeme kuruluşunun pazaryeri çözümü (iyzico, PayTR, Param gibi sağlayıcılar karşılaştırılmalı)</td><td>Uzun vadede kendi ödeme kuruluşu lisansı</td></tr>
+          <tr><td>Teklif toplama süresi</td><td>24 saat</td><td>12 veya 48 saat</td></tr>
+          <tr><td>Otomatik onay süresi</td><td>Teslimden sonra 72 saat</td><td>48 saat · 7 gün</td></tr>
+          <tr><td>Taksit vade farkı</td><td>Müşteriye yansır</td><td>Dükkanla paylaşılır · kampanyalı taksit</td></tr>
+          <tr><td>Çoklu kategori</td><td>Evet, eksik kapsamlılar "Kısmi" etiketli</td><td>Talep başına tek kategori</td></tr>
+          <tr><td>Revize kuralı</td><td>Tek revize, her durumda müşteri onayı</td><td>Belirli bir orana (ör. %10) kadar otomatik</td></tr>
+          <tr><td>Minimum garanti</td><td>6 ay işçilik</td><td>Zorunlu değil, yalnızca gösterilir</td></tr>
+          <tr><td>Lansman bölgesi</td><td>Tek şehir (ör. İstanbul Anadolu yakası)</td><td>Tüm Türkiye</td></tr>
+          <tr><td>Misafir mi, üyelik mi?</td><td>Misafir (telefon + SMS kodu), üyelik isteğe bağlı</td><td>Ödeme adımında üyelik zorunlu</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="dok-bolum" id="fazlar" aria-labelledby="fazlar-b">
+      <h2 id="fazlar-b">Faz planı</h2>
+      <div class="fazlar">
+        <div class="faz aktif"><span class="badge badge-solid">Faz 1a · Lansman</span><ul><li>Landing page (9 bölüm)</li><li>Hasar tespit modülü + SMS kodu</li><li>Teklif Takip (misafir)</li><li>Karşılaştırma, seçim, iletişim, randevu</li><li>Dükkan Paneli lite</li><li>Yönetim: dükkan onayı</li></ul></div>
+        <div class="faz"><span class="badge badge-tq">Faz 1b · Güvenli ödeme</span><ul><li>Ödeme kuruluşu entegrasyonu</li><li>Teslim / teslim alma kodları</li><li>Kesin fiyat ve revize</li><li>Karşılıklı + otomatik onay</li><li>Komisyon, hakediş, fatura yükleme</li></ul></div>
+        <div class="faz"><span class="badge badge-outline">Faz 2</span><ul><li>Müşteri Paneli, Garajım</li><li>Değerlendirme ve puan tablosu (gerçek veri)</li><li>İtiraz yönetimi, yönetim paneli</li><li>Ek iş talebi, e-posta/push</li></ul></div>
+        <div class="faz"><span class="badge badge-outline">Faz 3</span><ul><li>Kasko/sigorta ve eksper</li><li>Çekici / vale</li><li>Fotoğraftan yapay zekâ ile ön tespit</li><li>Plaka ile araç bilgisi, mobil uygulama</li></ul></div>
+      </div>
+      <p class="notice"><i data-ikon="info"></i><span>Puan tablosu ilk günlerde gerçek veri olmadan boş kalır. Lansmanda anlaşmalı firmalar "Yeni" etiketiyle listelenir, tablo yeterli değerlendirme birikince açılır.</span></p>
+    </section>
+
+    <section class="dok-bolum" id="ekranlar" aria-labelledby="ekranlar-b">
+      <h2 id="ekranlar-b">Prototip ekranları</h2>
+      <p>Prototip örnek verilerle çalışır; girilen bilgiler hiçbir yere gönderilmez, yalnızca tarayıcıda tutulur. Uçtan uca denemek için ana sayfada talep oluştur, Dükkan Paneli'nden teklif ver, Teklif Takip'te o teklifi seçip adımları iki taraftan ilerlet. Sağ alttaki <b>Prototip kontrolleri</b> ile adımları tek sayfadan da atlayabilirsin.</p>
+      <div class="ekranlar">
+        <a class="ekran" href="index.html"><i data-ikon="house"></i><b>Ana sayfa</b><p>9 bölüm, hasar tespit sihirbazı, SMS kodu, Tekliflerim girişi.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
+        <a class="ekran" href="talep.html"><i data-ikon="inbox"></i><b>Teklif takip</b><p>Teklif karşılaştırma, seçim, randevu, kesin fiyat, güvenli ödeme, onay, itiraz, puanlama.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
+        <a class="ekran" href="dukkan-paneli.html"><i data-ikon="store"></i><b>Dükkan paneli</b><p>Kategoriye göre talepler, komisyon hesaplı teklif formu, aktif işler, hakedişler.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
+        <a class="ekran" href="musteri-paneli.html"><i data-ikon="circle-user-round"></i><b>Müşteri paneli</b><p>Taleplerim, Garajım, ödemeler, değerlendirmeler, bildirim tercihleri.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-bottom">
+    <span>© 2026 TamirPort (çalışma adı) · Prototip</span>
+    <ul><li><a href="index.html">Ana sayfa</a></li><li><a href="talep.html">Teklif takip</a></li><li><a href="dukkan-paneli.html">Dükkan paneli</a></li><li><a href="musteri-paneli.html">Müşteri paneli</a></li></ul>
+  </div>
+</footer>
+
+<script src="assets/js/ikonlar.js"></script>
+<script src="assets/js/veri.js"></script>
+<script src="assets/js/ortak.js"></script>
+<script>TP.sayfaKur();</script>
+</body>
+</html>

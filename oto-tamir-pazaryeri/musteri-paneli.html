@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Müşteri Paneli · TamirPort</title>
+<meta name="description" content="Taleplerini, araçlarını, ödemelerini ve değerlendirmelerini tek yerden yönet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow+Semi+Condensed:wght@500;600;700&family=Figtree:wght@400..700&display=swap">
+<link rel="stylesheet" href="assets/css/temel.css">
+<link rel="stylesheet" href="assets/css/panel.css">
+</head>
+<body>
+<div id="proto-serit" data-sayfa="musteri"></div>
+
+<div class="app">
+  <aside class="app-yan" aria-label="Müşteri paneli menüsü">
+    <a class="logo" href="index.html" aria-label="TamirPort ana sayfa"><i data-logo></i><span>Tamir<b>Port</b></span></a>
+    <span class="app-rol">Müşteri paneli</span>
+    <nav class="app-nav">
+      <a href="#talepler" data-gorunum="talepler"><i data-ikon="inbox"></i>Taleplerim<span class="sayac" data-sayac="talepler"></span></a>
+      <a href="#garaj" data-gorunum="garaj"><i data-ikon="warehouse"></i>Garajım</a>
+      <a href="#odemeler" data-gorunum="odemeler"><i data-ikon="credit-card"></i>Ödemelerim</a>
+      <a href="#degerlendirmeler" data-gorunum="degerlendirmeler"><i data-ikon="star"></i>Değerlendirmelerim</a>
+      <a href="#profil" data-gorunum="profil"><i data-ikon="settings"></i>Profil ve bildirimler</a>
+    </nav>
+    <div class="app-yan-alt" id="yan-kullanici"></div>
+  </aside>
+
+  <div class="app-ana">
+    <header class="app-ust">
+      <a class="logo" href="index.html" aria-label="TamirPort ana sayfa"><i data-logo></i><span>Tamir<b>Port</b></span></a>
+      <div class="app-baslik"><h1 id="gorunum-baslik">Taleplerim</h1><p id="gorunum-alt"></p></div>
+      <div class="app-ust-sag">
+        <a class="btn btn-primary" href="index.html#teklif-al"><i data-ikon="plus"></i><span class="gizle-mobil">Yeni talep</span></a>
+      </div>
+    </header>
+    <main class="app-icerik" id="gorunum" aria-live="polite"></main>
+  </div>
+</div>
+
+<nav class="app-alt-nav" aria-label="Panel menüsü">
+  <a href="#talepler" data-gorunum="talepler"><i data-ikon="inbox"></i>Talepler</a>
+  <a href="#garaj" data-gorunum="garaj"><i data-ikon="warehouse"></i>Garajım</a>
+  <a href="#odemeler" data-gorunum="odemeler"><i data-ikon="credit-card"></i>Ödemeler</a>
+  <a href="#degerlendirmeler" data-gorunum="degerlendirmeler"><i data-ikon="star"></i>Puanlar</a>
+  <a href="#profil" data-gorunum="profil"><i data-ikon="settings"></i>Profil</a>
+</nav>
+
+<script src="assets/js/ikonlar.js"></script>
+<script src="assets/js/veri.js"></script>
+<script src="assets/js/ortak.js"></script>
+<script src="assets/js/musteri.js"></script>
+</body>
+</html>

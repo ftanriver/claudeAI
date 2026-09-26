@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TamirPort</title>
+<meta name="description" content="Aracındaki hasarı anlat, onaylı dükkanlardan teklif al, ödemen onay verene kadar güvende kalsın.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow+Semi+Condensed:wght@500;600;700&family=Figtree:wght@400..700&display=swap">
+<link rel="stylesheet" href="assets/css/temel.css">
+<link rel="stylesheet" href="assets/css/anasayfa.css">
+</head>
+<body>
+<div id="proto-serit" data-sayfa="anasayfa"></div>
+
+<!-- 1. Header -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="TamirPort ana sayfa"><i data-logo></i><span>Tamir<b>Port</b></span></a>
+    <nav class="nav" aria-label="Ana menü">
+      <a href="#ne-sagliyoruz">Nasıl çalışır?</a>
+      <a href="#firmalar">Anlaşmalı firmalar</a>
+      <a href="#puanlar">Firma puanları</a>
+      <a href="#rehber">Rehber</a>
+      <a href="#sss">SSS</a>
+    </nav>
+    <div class="header-actions">
+      <button type="button" class="btn btn-ghost" data-takip-ac><i data-ikon="inbox"></i><span>Tekliflerim</span></button>
+      <a class="btn btn-secondary hide-sm" href="dukkan-paneli.html"><i data-ikon="store"></i>Dükkan girişi</a>
+      <a class="btn btn-primary hide-sm hide-md" href="#teklif-al">Ücretsiz teklif al</a>
+      <button type="button" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="mobil-menu" aria-label="Menü"><i data-ikon="menu"></i></button>
+    </div>
+  </div>
+  <div class="drawer" id="mobil-menu" hidden>
+    <div class="wrap">
+      <a class="nav-link" href="#ne-sagliyoruz">Nasıl çalışır? <i data-ikon="chevron-right"></i></a>
+      <a class="nav-link" href="#firmalar">Anlaşmalı firmalar <i data-ikon="chevron-right"></i></a>
+      <a class="nav-link" href="#puanlar">Firma puanları <i data-ikon="chevron-right"></i></a>
+      <a class="nav-link" href="#rehber">Rehber <i data-ikon="chevron-right"></i></a>
+      <a class="nav-link" href="#sss">SSS <i data-ikon="chevron-right"></i></a>
+      <div class="drawer-actions">
+        <a class="btn btn-primary btn-lg btn-block" href="#teklif-al">Ücretsiz teklif al</a>
+        <a class="btn btn-secondary btn-lg btn-block" href="dukkan-paneli.html"><i data-ikon="store"></i>Dükkan girişi</a>
+      </div>
+    </div>
+  </div>
+  <div class="aktif-talep" id="aktif-talep" hidden></div>
+</header>
+
+<main>
+  <!-- 2. Kaza / hasar tespit modülü -->
+  <section class="hero" id="teklif-al" aria-labelledby="hero-baslik">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Kaporta · Boya · Mekanik · Elektrik · Döşeme</p>
+        <h1 id="hero-baslik">Hasarını anlat, <em>ustalar</em> sana teklif versin.</h1>
+        <p class="lead">Aracının bilgilerini ve hasarın fotoğrafını paylaş. Bölgendeki onaylı dükkanlardan gelen teklifleri fiyat ve puanlarıyla karşılaştır. Ödemen, onarım bitip sen onay verene kadar güvende kalır.</p>
+        <ol class="hero-steps">
+          <li><span class="no">1</span><div><b>Hasarı anlat</b><span>2 dakika sürer, üyelik gerekmez</span></div></li>
+          <li><span class="no">2</span><div><b>Teklifleri karşılaştır</b><span>Fiyat, puan, mesafe ve garanti yan yana</span></div></li>
+          <li><span class="no">3</span><div><b>Güvenle öde, onayla</b><span>Onay verene kadar ödeme dükkana geçmez</span></div></li>
+        </ol>
+        <ul class="hero-trust">
+          <li><i data-ikon="smartphone"></i>SMS ile doğrulama</li>
+          <li><i data-ikon="badge-check"></i>Belgeleri doğrulanmış dükkanlar</li>
+          <li><i data-ikon="shield-check"></i>Ödeme güvencesi</li>
+        </ul>
+      </div>
+
+      <div class="wizard" id="sihirbaz">
+        <div class="wz-head">
+          <div>
+            <p class="wz-kicker"><i data-ikon="car-front"></i>Hasar tespit formu</p>
+            <h2 class="wz-title">Ücretsiz teklif al</h2>
+          </div>
+          <span class="badge badge-tq"><i data-ikon="lock"></i>Bilgilerin korunur</span>
+        </div>
+        <ol class="wz-steps" id="wz-adimlar" aria-label="Form adımları">
+          <li class="aktif" data-gosterge="1"><span class="no">1</span><span>Araç</span></li>
+          <li data-gosterge="2"><span class="no">2</span><span>Hasar</span></li>
+          <li data-gosterge="3"><span class="no">3</span><span>İletişim</span></li>
+        </ol>
+
+        <form id="hasar-formu" novalidate>
+          <div class="wz-panel" data-adim="1">
+            <div class="grid-2">
+              <div class="field" data-alan="marka">
+                <label for="f-marka">Marka</label>
+                <select class="select" id="f-marka" required><option value="">Marka seç</option></select>
+                <span class="field-error">Aracının markasını seç.</span>
+              </div>
+              <div class="field" data-alan="model">
+                <label for="f-model">Model</label>
+                <select class="select" id="f-model" required disabled><option value="">Önce marka seç</option></select>
+                <span class="field-error">Modeli seç.</span>
+              </div>
+              <div class="field" data-alan="yil">
+                <label for="f-yil">Model yılı</label>
+                <select class="select" id="f-yil" required><option value="">Yıl seç</option></select>
+                <span class="field-error">Model yılını seç.</span>
+              </div>
+              <div class="field" data-alan="paket">
+                <label for="f-paket">Paket</label>
+                <select class="select" id="f-paket" required disabled><option value="">Önce marka seç</option></select>
+                <span class="field-error">Paketi seç ya da "Bilmiyorum"u işaretle.</span>
+              </div>
+            </div>
+            <p class="hint wz-hint"><i data-ikon="info"></i>Paketini bilmiyorsan listedeki "Bilmiyorum" seçeneğini kullan; dükkanlar gerekirse sorar.</p>
+            <div class="wz-actions">
+              <button type="button" class="btn btn-primary btn-lg btn-block" data-ileri>Devam et<i data-ikon="arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="wz-panel" data-adim="2" hidden>
+            <div class="field" data-alan="kategori">
+              <span class="label" id="kat-label">Arıza kategorisi <span class="opt">Birden fazla seçebilirsin</span></span>
+              <div class="cat-picker" role="group" aria-labelledby="kat-label" id="f-kategoriler"></div>
+              <span class="field-error">En az bir kategori seç.</span>
+            </div>
+            <div class="field">
+              <span class="label">Hasarlı yerin fotoğrafları <span class="opt">İsteğe bağlı · en fazla 6</span></span>
+              <label class="dropzone" for="f-foto" id="f-dropzone">
+                <i data-ikon="image-plus"></i>
+                <span><b>Fotoğraf ekle</b> ya da buraya sürükle</span>
+                <span class="hint">Fotoğraf eklemek daha isabetli teklif almanı sağlar. Konum bilgisi silinir.</span>
+              </label>
+              <input type="file" id="f-foto" accept="image/*" multiple class="gizli-metin">
+              <ul class="thumbs" id="f-foto-liste" aria-label="Eklenen fotoğraflar"></ul>
+            </div>
+            <div class="field">
+              <label for="f-aciklama">Hasar açıklaması <span class="opt">İsteğe bağlı</span></label>
+              <textarea class="textarea" id="f-aciklama" maxlength="1000" placeholder="Örn: Sağ ön çamurlukta göçük ve boya kalkması var, far çerçevesi çizik. Araç yürür durumda."></textarea>
+              <span class="hint tnum wz-sayac"><span id="f-aciklama-say">0</span>/1000</span>
+            </div>
+            <label class="check"><input type="checkbox" id="f-yurumuyor"><span>Araç yürür durumda değil <span class="soluk">(çekici gerekebilir)</span></span></label>
+            <div class="wz-actions two">
+              <button type="button" class="btn btn-secondary btn-lg" data-geri><i data-ikon="arrow-left"></i>Geri</button>
+              <button type="button" class="btn btn-primary btn-lg" data-ileri>Devam et<i data-ikon="arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="wz-panel" data-adim="3" hidden>
+            <div class="grid-2">
+              <div class="field" data-alan="ad">
+                <label for="f-ad">Ad</label>
+                <input class="input" id="f-ad" autocomplete="given-name" required>
+                <span class="field-error">Adını yaz.</span>
+              </div>
+              <div class="field" data-alan="soyad">
+                <label for="f-soyad">Soyad</label>
+                <input class="input" id="f-soyad" autocomplete="family-name" required>
+                <span class="field-error">Soyadını yaz.</span>
+              </div>
+            </div>
+            <div class="field" data-alan="tel">
+              <label for="f-tel">Cep telefonu</label>
+              <div class="input-group"><span class="prefix">+90</span><input class="input tnum" id="f-tel" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="5XX XXX XX XX" required></div>
+              <span class="field-error">5 ile başlayan 10 haneli cep numaranı yaz.</span>
+            </div>
+            <div class="grid-2">
+              <div class="field" data-alan="il">
+                <label for="f-il">İl</label>
+                <select class="select" id="f-il" required></select>
+                <span class="field-error">Aracın bulunduğu ili seç.</span>
+              </div>
+              <div class="field" data-alan="ilce">
+                <label for="f-ilce">İlçe</label>
+                <select class="select" id="f-ilce" required disabled><option value="">Önce il seç</option></select>
+                <span class="field-error">İlçeyi seç.</span>
+              </div>
+            </div>
+            <div class="consents">
+              <label class="check" data-alan="kvkk"><input type="checkbox" id="f-kvkk" required><span><button type="button" class="link-btn" data-kvkk>KVKK Aydınlatma Metni</button>'ni okudum; talebimin fotoğraf ve açıklamasıyla birlikte dükkanlarla paylaşılmasına onay veriyorum.</span></label>
+              <label class="check"><input type="checkbox" id="f-iys"><span>Kampanya ve bilgilendirme SMS'leri almak istiyorum. <span class="soluk">(İsteğe bağlı)</span></span></label>
+            </div>
+            <p class="notice"><i data-ikon="eye"></i><span>Adın ve telefon numaran, sen bir dükkan seçene kadar dükkanlarla paylaşılmaz.</span></p>
+            <div class="wz-actions two">
+              <button type="button" class="btn btn-secondary btn-lg" data-geri><i data-ikon="arrow-left"></i>Geri</button>
+              <button type="submit" class="btn btn-primary btn-lg">Kod gönder<i data-ikon="send"></i></button>
+            </div>
+          </div>
+        </form>
+
+        <div class="wz-panel" data-adim="otp" hidden>
+          <div class="otp-head">
+            <span class="otp-icon"><i data-ikon="smartphone"></i></span>
+            <div>
+              <h3>Telefonunu doğrula</h3>
+              <p><b id="otp-tel" class="tnum"></b> numarasına 6 haneli bir kod gönderdik. <button type="button" class="link-btn" data-duzenle>Numarayı düzenle</button></p>
+            </div>
+          </div>
+          <div class="otp-inputs" id="otp-kutular" role="group" aria-label="6 haneli doğrulama kodu">
+            <input class="tnum" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="1. hane">
+            <input class="tnum" inputmode="numeric" maxlength="6" aria-label="2. hane">
+            <input class="tnum" inputmode="numeric" maxlength="6" aria-label="3. hane">
+            <input class="tnum" inputmode="numeric" maxlength="6" aria-label="4. hane">
+            <input class="tnum" inputmode="numeric" maxlength="6" aria-label="5. hane">
+            <input class="tnum" inputmode="numeric" maxlength="6" aria-label="6. hane">
+          </div>
+          <p class="otp-error" id="otp-hata" hidden></p>
+          <div class="otp-meta">
+            <span class="tnum" id="otp-sure">Kod 03:00 geçerli</span>
+            <button type="button" class="link-btn" id="otp-tekrar" disabled>Tekrar gönder</button>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="otp-dogrula">Doğrula ve talebi gönder</button>
+          <p class="hint">Prototip: kod, ekranın üstünde SMS bildirimi olarak görünür.</p>
+        </div>
+
+        <div class="wz-panel wz-bitti" data-adim="bitti" hidden>
+          <span class="bitti-icon"><i data-ikon="circle-check"></i></span>
+          <h3>Talebin dükkanlara iletildi</h3>
+          <div id="bitti-plaka"></div>
+          <p id="bitti-metin"></p>
+          <ul class="bitti-list">
+            <li><i data-ikon="timer"></i><span>Teklif toplama süresi 24 saat; istersen daha önce seçim yapabilirsin.</span></li>
+            <li><i data-ikon="message-square-text"></i><span>Takip linki telefonuna SMS ile gönderildi.</span></li>
+            <li><i data-ikon="user-check"></i><span>Üyelik gerekmez. Başka cihazdan <b>Tekliflerim</b> ile telefon numaranla ulaşırsın.</span></li>
+          </ul>
+          <a class="btn btn-primary btn-lg btn-block" href="talep.html">Teklifleri takip et<i data-ikon="arrow-right"></i></a>
+          <button type="button" class="btn btn-ghost btn-block" id="bitti-kopyala"><i data-ikon="copy"></i>Takip linkini kopyala</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Anlaşmalı firmalar -->
+  <section class="section" id="firmalar" aria-labelledby="firmalar-baslik">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow">Anlaşmalı firmalar</p>
+          <h2 id="firmalar-baslik">Belgeleri doğrulanmış, garanti veren dükkanlar</h2>
+          <p class="lead">Vergi levhası, işyeri adresi ve IBAN'ı doğrulanan, en az 6 ay işçilik garantisi veren dükkanlar anlaşmalı firma rozeti alır.</p>
+        </div>
+        <div class="chip-row" id="firma-filtre" role="group" aria-label="Kategoriye göre filtrele"></div>
+      </div>
+      <div class="partner-grid" id="firma-listesi"></div>
+      <div class="partner-cta">
+        <div class="partner-cta-icon"><i data-ikon="store"></i></div>
+        <div>
+          <h3>Dükkan sahibi misin?</h3>
+          <p>Bölgendeki talepleri gör, ücretsiz teklif ver, ödemeni iş bitince güvenle al. Komisyon yalnızca tamamlanan işlerden alınır.</p>
+        </div>
+        <a class="btn btn-dark btn-lg" href="dukkan-paneli.html">Anlaşmalı firma ol<i data-ikon="arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Firma puanları tablosu -->
+  <section class="section section-soft" id="puanlar" aria-labelledby="puanlar-baslik">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow">Firma puanları</p>
+          <h2 id="puanlar-baslik">En yüksek puanlı dükkanlar</h2>
+          <p class="lead">Puanlar yalnızca TamirPort üzerinden tamamlanan ve ödemesi onaylanan işlerin değerlendirmelerinden hesaplanır.</p>
+        </div>
+        <div class="table-controls">
+          <label class="gizli-metin" for="puan-il">Şehir</label>
+          <select class="select" id="puan-il">
+            <option value="İstanbul">İstanbul</option>
+            <option value="Ankara">Ankara</option>
+            <option value="İzmir">İzmir</option>
+            <option value="">Tüm Türkiye</option>
+          </select>
+        </div>
+      </div>
+      <div class="seg table-tabs" id="puan-kategori" role="group" aria-label="Uzmanlık alanı"></div>
+      <div class="table-card">
+        <table class="rank-table">
+          <caption class="gizli-metin">Firma puanları tablosu</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="c-sira">#</th>
+              <th scope="col">Firma</th>
+              <th scope="col">Uzmanlık</th>
+              <th scope="col" aria-sort="descending"><button type="button" data-sirala="puan">Puan<i data-ikon="arrow-up-down"></i></button></th>
+              <th scope="col"><button type="button" data-sirala="degerlendirme">Değerlendirme<i data-ikon="arrow-up-down"></i></button></th>
+              <th scope="col"><button type="button" data-sirala="tamamlanan">Tamamlanan iş<i data-ikon="arrow-up-down"></i></button></th>
+              <th scope="col"><button type="button" data-sirala="sadakat">Teklife sadakat<i data-ikon="arrow-up-down"></i></button></th>
+              <th scope="col"><button type="button" data-sirala="yanitDk">Ort. yanıt<i data-ikon="arrow-up-down"></i></button></th>
+            </tr>
+          </thead>
+          <tbody id="puan-tablosu"></tbody>
+        </table>
+      </div>
+      <details class="table-note">
+        <summary><i data-ikon="circle-help"></i>Puan ve teklife sadakat nasıl hesaplanır?</summary>
+        <p><b>Puan</b>, doğrulanmış değerlendirmelerin ağırlıklı ortalamasıdır. Az değerlendirmesi olan dükkanlar genel ortalamaya doğru çekilir, böylece 2 yorumla 5,0 alan bir dükkan 300 yorumla 4,9 alanın önüne geçemez. Son 12 ayın değerlendirmeleri daha ağırlıklıdır. Tabloya girmek için en az 5 değerlendirme gerekir.</p>
+        <p><b>Teklife sadakat</b>, dükkanın işlerinin yüzde kaçını ilk teklif ettiği fiyatla tamamladığını gösterir. Araç görüldükten sonra yapılan revizeler bu oranı düşürür.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 5. Ne sağlıyoruz? -->
+  <section class="section" id="ne-sagliyoruz" aria-labelledby="ne-baslik">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Ne sağlıyoruz?</p>
+        <h2 id="ne-baslik">Teklif almaktan ödemenin aktarılmasına kadar her adım tek yerde</h2>
+      </div>
+      <div class="value-grid">
+        <article class="value"><span class="value-icon"><i data-ikon="inbox"></i></span><h3>Ücretsiz ve üyeliksiz teklif</h3><p>Telefonunu SMS koduyla doğrula, teklifler gelmeye başlasın. Karşılaştırmak ve vazgeçmek ücretsiz.</p></article>
+        <article class="value"><span class="value-icon"><i data-ikon="shield-check"></i></span><h3>Güvenli ödeme</h3><p>Ödemen lisanslı ödeme kuruluşunda bloke tutulur. Sen onay vermeden dükkana geçmez.</p></article>
+        <article class="value"><span class="value-icon"><i data-ikon="badge-check"></i></span><h3>Onaylı dükkanlar</h3><p>Vergi levhası, adresi ve IBAN'ı doğrulanmış, işçilik garantisi veren dükkanlar.</p></article>
+        <article class="value"><span class="value-icon"><i data-ikon="star"></i></span><h3>Şeffaf puanlar</h3><p>Yalnızca gerçekleşmiş işlerin değerlendirmeleri. Her dükkanın teklife sadakat oranını görürsün.</p></article>
+        <article class="value"><span class="value-icon"><i data-ikon="receipt-turkish-lira"></i></span><h3>Sürpriz fiyat yok</h3><p>Araç görüldükten sonra fiyat değişecekse gerekçeli revize gelir. Onaylamazsan aracını ücretsiz geri alırsın.</p></article>
+        <article class="value"><span class="value-icon"><i data-ikon="scale"></i></span><h3>Uyuşmazlık desteği</h3><p>Sorun çıkarsa ödeme bekletilir. Önce dükkana düzeltme hakkı tanınır, gerekirse bağımsız eksper devreye girer.</p></article>
+      </div>
+
+      <div class="escrow" aria-labelledby="escrow-baslik">
+        <div class="escrow-copy">
+          <h3 id="escrow-baslik">Ödemen nasıl güvende kalır?</h3>
+          <p>Onarım, ödeme güvenceye alınmadan başlamaz; ödeme de sen onay vermeden dükkana geçmez.</p>
+        </div>
+        <ol class="escrow-flow">
+          <li><span class="e-icon"><i data-ikon="credit-card"></i></span><b>Kesin fiyatı onaylar, ödersin</b><span>Araç dükkanda incelendikten sonra, taksit seçenekleriyle.</span></li>
+          <li class="vurgu"><span class="e-icon"><i data-ikon="lock"></i></span><b>Ödeme güvencede bekler</b><span>Lisanslı ödeme kuruluşunda bloke edilir, dükkana geçmez.</span></li>
+          <li><span class="e-icon"><i data-ikon="clipboard-check"></i></span><b>Aracını kontrol edip onaylarsın</b><span>Dükkan işi bitirir, sen teslim alırken kontrol edersin.</span></li>
+          <li><span class="e-icon"><i data-ikon="hand-coins"></i></span><b>Ödeme dükkana aktarılır</b><span>Komisyon düşülerek dükkanın hesabına geçer.</span></li>
+        </ol>
+        <p class="escrow-note"><i data-ikon="timer"></i>Aracını teslim aldıktan sonra 72 saat içinde sorun bildirmezsen ödeme otomatik onaylanır. Sorun bildirirsen ödeme, çözüme kadar bekletilir.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. İlgili markalar -->
+  <section class="section section-soft" id="markalar" aria-labelledby="markalar-baslik">
+    <div class="wrap">
+      <div class="section-head split">
+        <div>
+          <p class="eyebrow">İlgili markalar</p>
+          <h2 id="markalar-baslik">Aracının markasında deneyimli ustalar</h2>
+          <p class="lead">Markana tıkla, hasar tespit formu o markayla açılsın.</p>
+        </div>
+      </div>
+      <ul class="brand-grid" id="marka-listesi"></ul>
+      <p class="brand-note">Marka adları yalnızca hizmet verilen araçları belirtmek için kullanılır. Logolar, marka sahiplerinin kullanım kurallarına uygun şekilde eklenecektir.</p>
+    </div>
+  </section>
+
+  <!-- 7. Araç tamirinde dikkat edilmesi gerekenler -->
+  <section class="section" id="rehber" aria-labelledby="rehber-baslik">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Rehber</p>
+        <h2 id="rehber-baslik">Araç tamirinde dikkat edilmesi gerekenler</h2>
+      </div>
+      <div class="article-grid" id="makale-listesi"></div>
+    </div>
+  </section>
+
+  <!-- 8. SSS -->
+  <section class="section section-soft" id="sss" aria-labelledby="sss-baslik">
+    <div class="wrap faq-grid">
+      <div class="faq-intro">
+        <p class="eyebrow">SSS</p>
+        <h2 id="sss-baslik">Sık sorulan sorular</h2>
+        <p class="lead">Aradığın cevabı bulamadıysan destek ekibimize yaz.</p>
+        <div class="faq-contact">
+          <p><i data-ikon="headset"></i><span><b>0850 000 00 00</b><br><span class="soluk">Hafta içi 09:00–18:00</span></span></p>
+          <p><i data-ikon="mail"></i><span><b>destek@tamirport.example</b><br><span class="soluk">24 saat içinde yanıt</span></span></p>
+        </div>
+      </div>
+      <div class="faq-list">
+        <details open><summary>Teklif almak ücretli mi?</summary><p>Hayır. Teklif almak, karşılaştırmak ve vazgeçmek ücretsizdir. Yalnızca seçtiğin dükkanda onarımı yaptırırsan, onayladığın kesin fiyatı ödersin.</p></details>
+        <details><summary>Üye olmadan teklif alabilir miyim?</summary><p>Evet. Telefon numaranı SMS koduyla doğrulaman yeterli. İstersen daha sonra e-posta ekleyerek hesabını tamamlayabilir, araçlarını ve faturalarını tek yerde tutabilirsin.</p></details>
+        <details><summary>Teklifleri nereden göreceğim?</summary><p>SMS kodunu girdiğin anda talebine özel <b>Teklif Takip</b> sayfası açılır ve teklifler geldikçe burada listelenir. Aynı sayfanın linki telefonuna SMS ile gönderilir. Başka bir cihazdan girmek için sayfanın üstündeki <b>Tekliflerim</b> butonuna telefon numaranı yazman yeterli.</p></details>
+        <details><summary>Ödemeyi ne zaman yapıyorum, dükkana ne zaman geçiyor?</summary><p>Aracın dükkanda incelenip kesin fiyat belli olduğunda kartınla ödersin. Ödeme lisanslı ödeme kuruluşunda bloke tutulur. Onarım bitip sen onay verdiğinde, ya da aracı teslim aldıktan sonra 72 saat içinde sorun bildirmezsen, komisyon düşülerek dükkana aktarılır.</p></details>
+        <details><summary>Araç görüldükten sonra fiyat değişebilir mi?</summary><p>Fotoğraflara göre verilen teklif ön tekliftir. Dükkan aracı gördükten sonra fiyatı yalnızca bir kez, gerekçe ve fotoğrafla revize edebilir. Revizeyi onaylamazsan aracını ücretsiz geri alırsın. Onarım sırasında ek iş çıkarsa da onayın olmadan ek ücret alınamaz.</p></details>
+        <details><summary>Onarımdan memnun kalmazsam ne olur?</summary><p>Onay vermeden önce <b>Sorun bildir</b> diyerek itiraz açabilirsin. Ödeme bekletilir ve dükkana önce 48 saat içinde düzeltme hakkı tanınır. Anlaşma olmazsa TamirPort arabuluculuk yapar, gerekirse bağımsız eksper görüşü alınır.</p></details>
+        <details><summary>Taksit yapabilir miyim?</summary><p>Evet. Ödeme adımında kartına ve tutara göre taksit seçenekleri gösterilir. Taksit farkı varsa ödeme öncesinde açıkça yazılır.</p></details>
+        <details><summary>Kasko veya sigorta ile yaptırabilir miyim?</summary><p>İlk aşamada kendi ödeyeceğin onarımlara hizmet veriyoruz. Kasko ve sigorta süreçlerinin entegrasyonu sonraki aşamada eklenecek.</p></details>
+        <details><summary>Kişisel bilgilerim kimlerle paylaşılıyor?</summary><p>Teklif aşamasında dükkanlar yalnızca araç bilgisini, hasar fotoğraflarını, açıklamayı ve ilçeni görür. Adın ve telefon numaran sadece seçtiğin dükkanla, seçim yaptıktan sonra paylaşılır.</p></details>
+        <details><summary>Dükkanlar nasıl seçiliyor?</summary><p>Dükkanlar vergi levhası, işyeri adresi ve IBAN doğrulamasından geçer ve ödeme kuruluşuna alt üye işyeri olarak kaydedilir. Anlaşmalı firma rozeti için en az 6 ay işçilik garantisi taahhüdü gerekir. Puanı düşen veya çok itiraz alan dükkanlar incelemeye alınır.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 9. Footer -->
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html" aria-label="TamirPort ana sayfa"><i data-logo></i><span>Tamir<b>Port</b></span></a>
+      <p>Aracındaki hasar için onaylı dükkanlardan teklif al, karşılaştır ve ödemeni onay verene kadar güvende tut.</p>
+      <div class="footer-pay"><span><i data-ikon="lock"></i>3D Secure</span><span><i data-ikon="shield-check"></i>Lisanslı ödeme kuruluşu</span><span><i data-ikon="credit-card"></i>Taksit imkânı</span></div>
+    </div>
+    <nav class="footer-col" aria-label="Hizmetler">
+      <h3>Hizmetler</h3>
+      <ul id="footer-kategoriler"></ul>
+    </nav>
+    <nav class="footer-col" aria-label="Müşteriler">
+      <h3>Müşteriler</h3>
+      <ul>
+        <li><a href="#teklif-al">Teklif al</a></li>
+        <li><a href="talep.html">Teklif takip</a></li>
+        <li><a href="musteri-paneli.html">Müşteri paneli</a></li>
+        <li><a href="#ne-sagliyoruz">Nasıl çalışır?</a></li>
+        <li><a href="#sss">Sık sorulan sorular</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Dükkanlar">
+      <h3>Dükkanlar</h3>
+      <ul>
+        <li><a href="dukkan-paneli.html">Anlaşmalı firma ol</a></li>
+        <li><a href="dukkan-paneli.html">Dükkan paneli</a></li>
+        <li><a href="akis.html#kurallar">Dükkan kuralları</a></li>
+        <li><a href="akis.html#kurallar">Komisyon ve ödemeler</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Kurumsal">
+      <h3>Kurumsal</h3>
+      <ul>
+        <li><a href="akis.html">Hakkımızda</a></li>
+        <li><a href="#sss">İletişim</a></li>
+        <li><a href="akis.html">Ürün akışı ve kurallar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 TamirPort (çalışma adı) · Prototip</span>
+    <ul>
+      <li><button type="button" class="link-btn footer-link" data-kvkk>KVKK Aydınlatma Metni</button></li>
+      <li><a href="#sss">Çerez Politikası</a></li>
+      <li><a href="#sss">Kullanım Koşulları</a></li>
+      <li><a href="#sss">Mesafeli Hizmet Sözleşmesi</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="mobile-cta" id="mobil-cta" hidden>
+  <a class="btn btn-primary btn-lg btn-block" href="#teklif-al"><i data-ikon="car-front"></i>Ücretsiz teklif al</a>
+</div>
+
+<!-- Tekliflerim: telefon + SMS kodu ile misafir girişi -->
+<dialog class="modal" id="takip-modal" aria-labelledby="takip-baslik">
+  <div class="modal-head">
+    <div>
+      <h2 class="modal-title" id="takip-baslik">Tekliflerim</h2>
+      <p class="modal-sub">Talep açarken kullandığın telefon numarasıyla gir. Şifre gerekmez.</p>
+    </div>
+    <button type="button" class="icon-btn" data-kapat aria-label="Kapat"><i data-ikon="x"></i></button>
+  </div>
+  <div class="modal-body">
+    <form class="takip-adim" data-takip="tel" id="takip-tel-form" novalidate>
+      <div class="field" data-alan="takip-tel">
+        <label for="takip-tel">Cep telefonu</label>
+        <div class="input-group"><span class="prefix">+90</span><input class="input tnum" id="takip-tel" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="5XX XXX XX XX"></div>
+        <span class="field-error">5 ile başlayan 10 haneli cep numaranı yaz.</span>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Kod gönder</button>
+    </form>
+    <div class="takip-adim" data-takip="otp" hidden>
+      <p><b id="takip-otp-tel" class="tnum"></b> numarasına gelen 6 haneli kodu gir.</p>
+      <div class="otp-inputs" id="takip-kutular" role="group" aria-label="6 haneli doğrulama kodu">
+        <input class="tnum" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="1. hane">
+        <input class="tnum" inputmode="numeric" maxlength="6" aria-label="2. hane">
+        <input class="tnum" inputmode="numeric" maxlength="6" aria-label="3. hane">
+        <input class="tnum" inputmode="numeric" maxlength="6" aria-label="4. hane">
+        <input class="tnum" inputmode="numeric" maxlength="6" aria-label="5. hane">
+        <input class="tnum" inputmode="numeric" maxlength="6" aria-label="6. hane">
+      </div>
+      <p class="otp-error" id="takip-hata" hidden>Kod hatalı. Telefonuna gelen kodu kontrol et.</p>
+      <button type="button" class="btn btn-primary btn-lg btn-block" id="takip-dogrula">Giriş yap</button>
+    </div>
+    <div class="takip-adim" data-takip="liste" hidden>
+      <div id="takip-liste" class="takip-liste"></div>
+    </div>
+  </div>
+</dialog>
+
+<!-- KVKK özet metni -->
+<dialog class="modal" id="kvkk-modal" aria-labelledby="kvkk-baslik">
+  <div class="modal-head">
+    <div>
+      <h2 class="modal-title" id="kvkk-baslik">KVKK Aydınlatma Metni</h2>
+      <p class="modal-sub">Prototip için hazırlanmış özet. Nihai metni hukuk danışmanı hazırlar.</p>
+    </div>
+    <button type="button" class="icon-btn" data-kapat aria-label="Kapat"><i data-ikon="x"></i></button>
+  </div>
+  <div class="modal-body kvkk-metin">
+    <p><b>İşlenen veriler:</b> ad, soyad, cep telefonu, il ve ilçe, araç bilgileri, hasar fotoğrafları ve açıklaması, ödeme ve fatura bilgileri.</p>
+    <p><b>Amaç:</b> talebini uygun dükkanlara iletmek, teklifleri sana göstermek, seçtiğin dükkanla iletişimini sağlamak, ödemeyi güvenle yönetmek ve uyuşmazlıkları çözmek.</p>
+    <p><b>Aktarım:</b> Teklif aşamasında dükkanlar yalnızca araç bilgisini, fotoğrafları, açıklamayı ve ilçeni görür. Adın ve telefonun, seçtiğin dükkanla seçimden sonra paylaşılır. Ödeme bilgilerin lisanslı ödeme kuruluşu tarafından işlenir; TamirPort kart bilgisi saklamaz.</p>
+    <p><b>Haklar:</b> 6698 sayılı Kanun'un 11. maddesi kapsamındaki haklarını destek kanallarımızdan kullanabilirsin.</p>
+  </div>
+  <div class="modal-foot"><button type="button" class="btn btn-primary" data-kapat>Anladım</button></div>
+</dialog>
+
+<script src="assets/js/ikonlar.js"></script>
+<script src="assets/js/veri.js"></script>
+<script src="assets/js/ortak.js"></script>
+<script src="assets/js/anasayfa.js"></script>
+</body>
+</html>

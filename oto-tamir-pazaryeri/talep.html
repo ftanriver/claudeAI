@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teklif Takip · TamirPort</title>
+<meta name="description" content="Talebine gelen teklifleri karşılaştır, dükkanını seç, ödemeni güvenle yap ve onarımı onayla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow+Semi+Condensed:wght@500;600;700&family=Figtree:wght@400..700&display=swap">
+<link rel="stylesheet" href="assets/css/temel.css">
+<link rel="stylesheet" href="assets/css/talep.css">
+</head>
+<body>
+<div id="proto-serit" data-sayfa="talep"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="TamirPort ana sayfa"><i data-logo></i><span>Tamir<b>Port</b></span></a>
+    <span class="header-title">Teklif takip</span>
+    <div class="header-actions">
+      <a class="btn btn-ghost hide-sm" href="index.html#sss"><i data-ikon="life-buoy"></i>Yardım</a>
+      <a class="btn btn-secondary" href="musteri-paneli.html"><i data-ikon="circle-user-round"></i><span>Hesabım</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="talep-main">
+  <div class="wrap">
+    <div id="ust-bant"></div>
+    <section class="ozet" id="talep-ozet" aria-label="Talep özeti"></section>
+    <nav class="stepper" id="stepper" aria-label="Talep adımları"></nav>
+    <div class="talep-grid">
+      <div class="talep-icerik" id="asama-icerik" aria-live="polite"></div>
+      <aside class="talep-yan" id="yan-panel" aria-label="Talep detayı"></aside>
+    </div>
+  </div>
+</main>
+
+<footer class="mini-footer">
+  <div class="wrap">
+    <span>© 2026 TamirPort (çalışma adı) · Prototip</span>
+    <nav><a href="akis.html">Akış ve kurallar</a><a href="index.html#sss">Sık sorulan sorular</a><a href="index.html">Ana sayfa</a></nav>
+  </div>
+</footer>
+
+<div class="karsilastir-bar" id="karsilastir-bar" hidden></div>
+
+<script src="assets/js/ikonlar.js"></script>
+<script src="assets/js/veri.js"></script>
+<script src="assets/js/ortak.js"></script>
+<script src="assets/js/talep.js"></script>
+</body>
+</html>
