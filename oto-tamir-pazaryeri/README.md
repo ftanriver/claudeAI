@@ -4,6 +4,7 @@ Araç sahiplerinin hasar ve arızalarını fotoğraf ya da açıklamayla anlatı
 
 - Ürün akışı, açık noktalar ve karşılıklı kurallar: [`dokuman/urun-akisi-ve-kurallar.md`](dokuman/urun-akisi-ve-kurallar.md)
 - Aynı içeriğin görsel özeti prototipin içinde: `akis.html`
+- Türkiye içi benchmark (rakip platformlar ve çıkarımlar): [`dokuman/rakip-analizi.md`](dokuman/rakip-analizi.md)
 
 ## Ekranlar
 
