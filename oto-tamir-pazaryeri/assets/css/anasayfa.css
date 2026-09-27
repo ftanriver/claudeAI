@@ -384,3 +384,8 @@ tr:nth-child(-n+3) .sira { background: var(--tq-600); color: #fff; }
 .takip-talep b { display: block; }
 .takip-talep small { color: var(--soluk); }
 .kvkk-metin p { color: var(--metin-2); font-size: 15px; }
+.escrow-etiket {
+  display: inline-flex; align-items: center; gap: 6px; justify-self: start; padding: 4px 10px; border-radius: 99px;
+  background: rgba(47, 187, 207, .16); color: var(--tq-300); font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+.escrow-etiket .ikon { width: 15px; height: 15px; }

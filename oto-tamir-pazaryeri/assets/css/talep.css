@@ -352,3 +352,9 @@ body.bar-acik .demo { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 .mini-footer nav { display: flex; flex-wrap: wrap; gap: 16px; }
 .once-sonra .foto-kare { padding: 8px 8px 30px; }
 .once-sonra .foto-kare > span:not(.foto-etiket) { font-size: 12px; line-height: 1.3; }
+
+/* Güvenle yaptır şeridi */
+.guvence-seridi { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; padding: 10px 14px; border-radius: var(--r-m); background: var(--tq-50); font-size: 13.5px; color: var(--tq-800); }
+.guvence-seridi li { display: inline-flex; align-items: center; gap: 6px; }
+.guvence-seridi .ikon { width: 16px; height: 16px; color: var(--tq-600); }
+.guvence-seridi b { font-weight: 700; }

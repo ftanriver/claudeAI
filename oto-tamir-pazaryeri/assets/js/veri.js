@@ -8,7 +8,7 @@
     { id: "boya", ad: "Boya", ikon: "spray-can", ozet: "Lokal ve komple boya, pasta-cila" },
     { id: "mekanik", ad: "Mekanik", ikon: "cog", ozet: "Motor, şanzıman, fren, süspansiyon" },
     { id: "elektrik", ad: "Elektrik", ikon: "zap", ozet: "Akü, marş, aydınlatma, beyin" },
-    { id: "doseme", ad: "Döşeme", ikon: "armchair", ozet: "Koltuk, tavan, kapı döşemesi" },
+    { id: "trim", ad: "Trim", ikon: "armchair", ozet: "Koltuk, tavan, kapı ve konsol trimi" },
   ];
   V.kategori = (id) => V.kategoriler.find((k) => k.id === id);
 
@@ -65,14 +65,14 @@
     { id: "d1", ad: "Turkuaz Kaporta & Boya", kisa: "TK", ton: 0, il: "İstanbul", ilce: "Kadıköy", kategoriler: ["kaporta", "boya"], puan: 4.9, degerlendirme: 312, tamamlanan: 1240, sadakat: 97, yanitDk: 18, garantiAy: 12, kurulus: 2009, sahibi: "Murat Aydın", adres: "Hasanpaşa Mah. Kurbağalıdere Cad. No: 42", tel: "0216 000 00 42", saatler: "Hafta içi 08:30–19:00 · Cumartesi 09:00–16:00", kriterler: { iscilik: 4.9, fiyat: 4.8, zaman: 4.9, iletisim: 5.0 }, anlasmali: true },
     { id: "d2", ad: "Usta Garaj Oto Servis", kisa: "UG", ton: 2, il: "İstanbul", ilce: "Ataşehir", kategoriler: ["mekanik", "elektrik"], puan: 4.8, degerlendirme: 428, tamamlanan: 1905, sadakat: 95, yanitDk: 25, garantiAy: 6, kurulus: 2012, sahibi: "Serkan Öz", adres: "Barbaros Mah. Hal Yolu Cad. No: 18", tel: "0216 000 00 18", saatler: "Hafta içi 08:00–19:00 · Cumartesi 09:00–15:00", kriterler: { iscilik: 4.8, fiyat: 4.7, zaman: 4.8, iletisim: 4.9 }, anlasmali: true },
     { id: "d3", ad: "Anadolu Oto Elektrik", kisa: "AE", ton: 1, il: "İstanbul", ilce: "Ümraniye", kategoriler: ["elektrik"], puan: 4.7, degerlendirme: 196, tamamlanan: 760, sadakat: 96, yanitDk: 32, garantiAy: 6, kurulus: 2015, sahibi: "Hakan Er", adres: "Dudullu OSB 2. Cad. No: 7", tel: "0216 000 00 07", saatler: "Hafta içi 08:30–18:30", kriterler: { iscilik: 4.7, fiyat: 4.8, zaman: 4.6, iletisim: 4.7 }, anlasmali: true },
-    { id: "d4", ad: "Moda Döşeme Atölyesi", kisa: "MD", ton: 3, il: "İstanbul", ilce: "Üsküdar", kategoriler: ["doseme"], puan: 4.9, degerlendirme: 141, tamamlanan: 520, sadakat: 98, yanitDk: 45, garantiAy: 24, kurulus: 2006, sahibi: "Nuri Kaya", adres: "Bulgurlu Mah. Libadiye Cad. No: 63", tel: "0216 000 00 63", saatler: "Hafta içi 09:00–18:00 · Cumartesi 10:00–15:00", kriterler: { iscilik: 5.0, fiyat: 4.7, zaman: 4.8, iletisim: 4.9 }, anlasmali: true },
+    { id: "d4", ad: "Moda Trim Atölyesi", kisa: "MT", ton: 3, il: "İstanbul", ilce: "Üsküdar", kategoriler: ["trim"], puan: 4.9, degerlendirme: 141, tamamlanan: 520, sadakat: 98, yanitDk: 45, garantiAy: 24, kurulus: 2006, sahibi: "Nuri Kaya", adres: "Bulgurlu Mah. Libadiye Cad. No: 63", tel: "0216 000 00 63", saatler: "Hafta içi 09:00–18:00 · Cumartesi 10:00–15:00", kriterler: { iscilik: 5.0, fiyat: 4.7, zaman: 4.8, iletisim: 4.9 }, anlasmali: true },
     { id: "d5", ad: "Kartal Mekanik Merkezi", kisa: "KM", ton: 0, il: "İstanbul", ilce: "Kartal", kategoriler: ["mekanik"], puan: 4.6, degerlendirme: 233, tamamlanan: 980, sadakat: 92, yanitDk: 22, garantiAy: 6, kurulus: 2011, sahibi: "Cem Tunç", adres: "Yakacık Sanayi Sitesi C Blok No: 12", tel: "0216 000 00 12", saatler: "Hafta içi 08:00–18:30 · Cumartesi 08:30–14:00", kriterler: { iscilik: 4.7, fiyat: 4.6, zaman: 4.4, iletisim: 4.6 }, anlasmali: true },
     { id: "d6", ad: "Boyahane Maltepe", kisa: "BM", ton: 1, il: "İstanbul", ilce: "Maltepe", kategoriler: ["boya", "kaporta"], puan: 4.8, degerlendirme: 207, tamamlanan: 845, sadakat: 94, yanitDk: 28, garantiAy: 12, kurulus: 2014, sahibi: "Oğuz Şen", adres: "Esenkent Mah. Sanayi Cad. No: 9", tel: "0216 000 00 09", saatler: "Hafta içi 08:30–19:00", kriterler: { iscilik: 4.9, fiyat: 4.7, zaman: 4.7, iletisim: 4.8 }, anlasmali: true },
     { id: "d7", ad: "Kalamış Oto Kaporta", kisa: "KO", ton: 2, il: "İstanbul", ilce: "Kadıköy", kategoriler: ["kaporta"], puan: 4.5, degerlendirme: 98, tamamlanan: 410, sadakat: 90, yanitDk: 40, garantiAy: 6, kurulus: 2017, sahibi: "Emre Kılıç", adres: "Fikirtepe Mah. Mandıra Cad. No: 21", tel: "0216 000 00 21", saatler: "Hafta içi 09:00–18:30", kriterler: { iscilik: 4.6, fiyat: 4.5, zaman: 4.3, iletisim: 4.5 }, anlasmali: false },
     { id: "d8", ad: "Levent Premium Oto", kisa: "LP", ton: 2, il: "İstanbul", ilce: "Beşiktaş", kategoriler: ["kaporta", "boya", "mekanik"], puan: 4.8, degerlendirme: 365, tamamlanan: 1510, sadakat: 96, yanitDk: 15, garantiAy: 24, kurulus: 2008, sahibi: "Kerem Aslan", adres: "Levent Mah. Sanayi Sok. No: 4", tel: "0212 000 00 04", saatler: "Hafta içi 08:00–20:00 · Cumartesi 09:00–17:00", kriterler: { iscilik: 4.9, fiyat: 4.5, zaman: 4.8, iletisim: 4.9 }, anlasmali: true },
     { id: "d9", ad: "Bağcılar Usta Mekanik", kisa: "BU", ton: 3, il: "İstanbul", ilce: "Bağcılar", kategoriler: ["mekanik", "elektrik"], puan: 4.4, degerlendirme: 156, tamamlanan: 690, sadakat: 88, yanitDk: 35, garantiAy: 6, kurulus: 2013, sahibi: "Yusuf Demir", adres: "Güneşli Oto Sanayi 3. Blok No: 30", tel: "0212 000 00 30", saatler: "Hafta içi 08:00–19:00 · Cumartesi 08:00–15:00", kriterler: { iscilik: 4.5, fiyat: 4.6, zaman: 4.2, iletisim: 4.3 }, anlasmali: false },
     { id: "d10", ad: "Şişli Oto Elektrik & Klima", kisa: "ŞE", ton: 0, il: "İstanbul", ilce: "Şişli", kategoriler: ["elektrik"], puan: 4.7, degerlendirme: 120, tamamlanan: 505, sadakat: 95, yanitDk: 20, garantiAy: 6, kurulus: 2016, sahibi: "Tolga Ay", adres: "Mecidiyeköy Mah. Oto Sanayi Sok. No: 11", tel: "0212 000 00 11", saatler: "Hafta içi 09:00–18:30", kriterler: { iscilik: 4.7, fiyat: 4.6, zaman: 4.8, iletisim: 4.7 }, anlasmali: true },
-    { id: "d11", ad: "Beylikdüzü Oto Döşeme", kisa: "BD", ton: 1, il: "İstanbul", ilce: "Beylikdüzü", kategoriler: ["doseme"], puan: 4.6, degerlendirme: 74, tamamlanan: 280, sadakat: 93, yanitDk: 50, garantiAy: 12, kurulus: 2018, sahibi: "Sinan Uçar", adres: "Beylikdüzü OSB Mah. 12. Sok. No: 5", tel: "0212 000 00 05", saatler: "Hafta içi 09:00–18:00", kriterler: { iscilik: 4.7, fiyat: 4.6, zaman: 4.5, iletisim: 4.6 }, anlasmali: true },
+    { id: "d11", ad: "Beylikdüzü Oto Trim", kisa: "BT", ton: 1, il: "İstanbul", ilce: "Beylikdüzü", kategoriler: ["trim"], puan: 4.6, degerlendirme: 74, tamamlanan: 280, sadakat: 93, yanitDk: 50, garantiAy: 12, kurulus: 2018, sahibi: "Sinan Uçar", adres: "Beylikdüzü OSB Mah. 12. Sok. No: 5", tel: "0212 000 00 05", saatler: "Hafta içi 09:00–18:00", kriterler: { iscilik: 4.7, fiyat: 4.6, zaman: 4.5, iletisim: 4.6 }, anlasmali: true },
     { id: "d12", ad: "Pendik Kaporta Boya Merkezi", kisa: "PK", ton: 3, il: "İstanbul", ilce: "Pendik", kategoriler: ["kaporta", "boya"], puan: 4.7, degerlendirme: 188, tamamlanan: 720, sadakat: 94, yanitDk: 26, garantiAy: 12, kurulus: 2012, sahibi: "Barış Koç", adres: "Kaynarca Mah. Sanayi Cad. No: 38", tel: "0216 000 00 38", saatler: "Hafta içi 08:30–19:00 · Cumartesi 09:00–14:00", kriterler: { iscilik: 4.8, fiyat: 4.7, zaman: 4.6, iletisim: 4.7 }, anlasmali: true },
     { id: "d13", ad: "Çankaya Oto Bakım", kisa: "ÇO", ton: 0, il: "Ankara", ilce: "Çankaya", kategoriler: ["mekanik", "elektrik", "kaporta"], puan: 4.8, degerlendirme: 210, tamamlanan: 880, sadakat: 95, yanitDk: 24, garantiAy: 12, kurulus: 2010, sahibi: "Ahmet Yurt", adres: "Balgat Mah. Sanayi Sok. No: 14", tel: "0312 000 00 14", saatler: "Hafta içi 08:30–18:30 · Cumartesi 09:00–14:00", kriterler: { iscilik: 4.8, fiyat: 4.7, zaman: 4.8, iletisim: 4.8 }, anlasmali: true },
     { id: "d14", ad: "Bornova Boya & Kaporta", kisa: "BB", ton: 1, il: "İzmir", ilce: "Bornova", kategoriler: ["kaporta", "boya"], puan: 4.7, degerlendirme: 164, tamamlanan: 610, sadakat: 93, yanitDk: 30, garantiAy: 12, kurulus: 2013, sahibi: "Levent Ege", adres: "Işıkkent Oto Sanayi 1. Blok No: 22", tel: "0232 000 00 22", saatler: "Hafta içi 08:30–18:30", kriterler: { iscilik: 4.8, fiyat: 4.7, zaman: 4.6, iletisim: 4.7 }, anlasmali: true },
@@ -86,7 +86,7 @@
     { ad: "Ayşe D.", arac: "Toyota Corolla · Mekanik", puan: 4, gunOnce: 13, metin: "İşçilik iyi, yalnızca parça bir gün geç geldi. Gecikmeyi platformdan önceden bildirdiler." },
     { ad: "Burak Y.", arac: "BMW 3 Serisi · Kaporta, Boya", puan: 5, gunOnce: 17, metin: "Revize gerekmedi, ön teklif neyse o ödendi. Çamurluk fabrika çıkışı gibi oldu." },
     { ad: "Deniz A.", arac: "Fiat Egea · Elektrik", puan: 4, gunOnce: 22, metin: "Arızayı hızlı buldular. Bekleme alanı küçük ama iletişim çok iyiydi." },
-    { ad: "Mert Ç.", arac: "Hyundai i20 · Döşeme", puan: 5, gunOnce: 30, metin: "Koltuk döşemesi orijinal gibi oldu, iki yıl garanti verdiler." },
+    { ad: "Mert Ç.", arac: "Hyundai i20 · Trim", puan: 5, gunOnce: 30, metin: "Koltuk trimi orijinal gibi oldu, iki yıl garanti verdiler." },
   ];
 
   V.makaleler = [
@@ -170,7 +170,7 @@
   };
 
   // Kategori başına taban fiyat (₺, KDV dahil, orta sınıf araç) ve tahmini iş günü
-  const TABAN = { kaporta: [7600, 3], boya: [6200, 2], mekanik: [8800, 2], elektrik: [4600, 1], doseme: [5800, 3] };
+  const TABAN = { kaporta: [7600, 3], boya: [6200, 2], mekanik: [8800, 2], elektrik: [4600, 1], trim: [5800, 3] };
   const SINIF_KATSAYI = { premium: 1.45, orta: 1.1, ekonomik: 0.95 };
   const NOTLAR = {
     kaporta: [
@@ -189,9 +189,9 @@
       "Önce akü ve şarj sistemi testi yapılacak, kablo tesisatı onarımı fiyata dahildir.",
       "Beyin arıza kodları okunup raporlanır; rapor teslimde size verilir.",
     ],
-    doseme: [
+    trim: [
       "Orijinal dokuya en yakın kumaş ve deri numunelerini teslimde göstereceğiz.",
-      "Döşeme sökülmeden önce size numune onayı soracağız.",
+      "Trim parçaları sökülmeden önce size numune onayı soracağız.",
     ],
   };
   const EKLER = ["Teslimde iç-dış yıkama hediyemizdir.", "Aynı gün içinde randevu verebiliyoruz.", "", "", "Bekleme salonumuzda Wi-Fi ve ikram var."];
@@ -235,7 +235,7 @@
   };
 
   // Aynı ilde yeterli örnek dükkan yoksa talebin iline sanal dükkanlar üretilir
-  const SANAL_ADLAR = [["Merkez Oto Servis", "MO"], ["Yıldız Kaporta Boya", "YK"], ["Güven Oto Tamir", "GO"], ["Usta Eller Oto", "UE"], ["Özgür Oto Elektrik", "ÖE"], ["Sanayi Döşeme Evi", "SD"]];
+  const SANAL_ADLAR = [["Merkez Oto Servis", "MO"], ["Yıldız Kaporta Boya", "YK"], ["Güven Oto Tamir", "GO"], ["Usta Eller Oto", "UE"], ["Özgür Oto Elektrik", "ÖE"], ["Sanayi Trim Evi", "ST"]];
   function sanalDukkanlar(talep, adet, r) {
     const ilceler = V.ilceleriGetir(talep.il);
     return SANAL_ADLAR.slice(0, adet).map(([ad, kisa], i) => {

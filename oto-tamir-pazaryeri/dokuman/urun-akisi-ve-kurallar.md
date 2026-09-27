@@ -2,8 +2,8 @@
 
 **Proje:** Araç hasar/arıza için teklif toplama ve güvenli ödeme platformu
 **Çalışma adı:** TamirPort (geçici isim, prototipte tek yerden değiştirilebilir)
-**Sürüm:** v0.1 taslak · 26 Eylül 2026
-**Durum:** Kurallar önerilen varsayılanlardır. Onay bekleyen kararlar [§8](#8-onayınızı-bekleyen-kararlar)'de.
+**Sürüm:** v0.2 taslak · 27 Eylül 2026
+**Durum:** Kurallar önerilen varsayılanlardır. Verilen kararlar [§8.1](#81-verilen-kararlar)'de, onay bekleyenler [§8.2](#82-onayınızı-bekleyen-kararlar)'de.
 
 ---
 
@@ -14,7 +14,8 @@
 3. **Fotoğrafla verilen fiyat ön tekliftir.** Kesin fiyat araç dükkanda görüldükten sonra netleşir. Dükkanın tek revize hakkı vardır, müşteri revizeyi reddedip aracını ücretsiz geri alabilir.
 4. **Ödeme, dükkan seçildiğinde değil, kesin fiyat onaylandığında alınır.** Onarım, ödeme güvenceye alınmadan başlamaz.
 5. **Ödeme lisanslı bir ödeme kuruluşunda bloke tutulur.** Karşılıklı onayla dükkana aktarılır; müşteri teslimden sonra 72 saat içinde itiraz etmezse otomatik onaylanır. Komisyon aktarım sırasında düşülür.
-6. **İletişim bilgileri (adres, telefon) yalnızca seçimden sonra ve karşılıklı olarak açılır.** Aracın dükkana teslimi ve geri teslim alınması 4 haneli kodlarla kayıt altına alınır.
+6. **İletişim bilgileri (adres, telefon) yalnızca seçimden sonra ve karşılıklı olarak açılır.** Seçimden önce müşteri ve dükkan **maskeli mesajlaşmayla** yazışır: telefon, e-posta, bağlantı ve IBAN otomatik gizlenir. Aracın dükkana teslimi ve geri teslim alınması 4 haneli kodlarla kayıt altına alınır.
+7. **Ana mesaj: "Güvenle yaptır".** Teklif toplamak artık ayırt edici değil. Ayırt edici olan güvence katmanı: ödeme onaya kadar dükkana geçmez, dükkanların belgeleri doğrulanır, numara seçime kadar gizli kalır.
 
 ---
 
@@ -39,8 +40,8 @@
 | 1 | Müşteri | Hasar tespit formunu doldurur: **Araç** (marka, model, yıl, paket) → **Hasar** (kategori, fotoğraf, açıklama) → **İletişim** (ad, soyad, telefon, il/ilçe, KVKK onayı) | Landing |
 | 2 | Müşteri | SMS ile gelen 6 haneli kodu girer. Talep yayına girer, talep numarası oluşur, takip linki SMS ile gönderilir | Landing → Teklif Takip |
 | 3 | Sistem | Talebi, seçilen kategorilerden en az birine hizmet veren ve hizmet bölgesi talebin ilçesini kapsayan onaylı dükkanlara iletir. Dükkanlar müşterinin adını ve telefonunu görmez | Dükkan Paneli › Gelen talepler |
-| 4 | Dükkan | 24 saat içinde kapalı zarf teklif verir: tutar (KDV dahil), süre, parça türü, garanti, kapsam, not | Dükkan Paneli |
-| 5 | Müşteri | Teklifleri fiyat, puan, mesafe, süre, parça türü ve garantiye göre karşılaştırır, birini seçer | Teklif Takip |
+| 4 | Dükkan | 24 saat içinde kapalı zarf teklif verir: tutar (KDV dahil), süre, parça türü, garanti, kapsam, not. Bilgi yetersizse önce maskeli mesajla ek fotoğraf veya bilgi ister | Dükkan Paneli |
+| 5 | Müşteri | Teklifleri fiyat, puan, mesafe, süre, parça türü ve garantiye göre karşılaştırır. Sorularını dükkanlara maskeli mesajla sorar, birini seçer | Teklif Takip |
 | 6 | İkisi | Seçimle birlikte dükkanın adresi, konumu ve telefonu müşteriye; müşterinin adı ve telefonu dükkana açılır. Müşteri randevu saatini seçer ve ekranında **Teslim Kodu** görünür | Teklif Takip |
 | 7 | Dükkan | Aracı teslim alırken müşterinin söylediği kodu girer, aracın 4 yönden fotoğrafını, kilometresini ve yakıt seviyesini kaydeder | Dükkan Paneli › Aktif işler |
 | 8 | Dükkan | Aracı inceler ve **kesin fiyatı** girer: ön teklif geçerli ya da gerekçeli ve fotoğraflı revize | Dükkan Paneli |
@@ -116,6 +117,7 @@ stateDiagram-v2
 - **SMS:** ilk teklif, 3. teklif ya da süre dolumu özeti, randevu hatırlatması, kesin fiyat bildirimi, onarımın bitmesi, otomatik onaydan 24 saat önce.
 - **E-posta/push (üyeler):** her yeni teklif, durum değişiklikleri.
 - Her teklif için ayrı SMS gönderilmez.
+- **Mesajlar:** dükkana panelde anlık bildirim. Misafir müşteriye okunmamış mesajlar için toplu SMS (günde en fazla 2), üyelere push/e-posta.
 
 **Neden üyelik şartı yok?** Formun sonunda şifre istemek dönüşümü düşürür. Telefon + SMS kodu hem kimliği doğrular hem de sahte talepleri engeller. Üyelik önerisi, talep tamamlandığında "Aracını kaydet, bir dahaki sefere tek tıkla teklif al" mesajıyla yapılır.
 
@@ -127,7 +129,7 @@ stateDiagram-v2
 | --- | --- | --- |
 | Marka, model, yıl | Evet | Model listesi markaya göre gelir |
 | Paket (donanım) | Evet | **"Bilmiyorum" seçeneği eklenir.** Çoğu kullanıcı paketini bilmez |
-| Arıza kategorisi | Evet (en az 1) | Kaporta, Boya, Mekanik, Elektrik, Döşeme. **Çoklu seçim** (kaza çoğunlukla kaporta + boya) |
+| Arıza kategorisi | Evet (en az 1) | Kaporta, Boya, Mekanik, Elektrik, Trim. **Çoklu seçim** (kaza çoğunlukla kaporta + boya) |
 | Görsel | Hayır | En fazla 6 fotoğraf. Konum/EXIF verisi silinir |
 | Açıklama | Hayır | En fazla 1000 karakter, örnek metinli |
 | Araç yürür durumda değil | Hayır | Dükkan teklifine çekici hizmeti ekleyebilir |
@@ -158,7 +160,7 @@ stateDiagram-v2
 | 11 | Onarım sırasında **ek iş** çıkabilir | Yalnızca platformdan ek iş talebi + müşteri onayı + ek ödeme. Platform dışı ek ücret yasak |
 | 12 | **Komisyon** modeli belirsiz | Müşteri teklifte gördüğü tutarı öder. Komisyon dükkan hakedişinden düşülür (başlangıç önerisi %10, ödeme altyapısı maliyeti dahil). Taksit vade farkı müşteriye yansır |
 | 13 | **Fatura** kimden kime? | Dükkan tam tutar üzerinden müşteriye e-Arşiv/e-Fatura keser ve tamamlama adımında yükler. TamirPort dükkana komisyon faturası keser |
-| 14 | **Platform dışına kaçış** (iletişim alınıp dışarıda anlaşılması) | İletişim seçimden sonra açılır. Ödeme güvencesi, garanti takibi ve puan yalnızca platform içi işlerde geçerlidir. İhlal yaptırımları [§7.9](#79-vazgeçme-ve-yaptırımlar) |
+| 14 | **Platform dışına kaçış** (iletişim alınıp dışarıda anlaşılması) | İletişim seçimden sonra açılır. Seçimden önceki soru-cevap maskeli mesajlaşmayla platformda kalır ([§7.11](#711-maskeli-mesajlaşma)). Ödeme güvencesi, garanti takibi ve puan yalnızca platform içi işlerde geçerlidir. İhlal yaptırımları [§7.9](#79-vazgeçme-ve-yaptırımlar) |
 | 15 | **Dükkan kabul** kriterleri yok | Vergi levhası, oda/sicil kaydı, adres ve işyeri fotoğrafı, IBAN eşleşmesi, ödeme kuruluşu KYC'si, en az 6 ay işçilik garantisi taahhüdü |
 | 16 | **Puan manipülasyonu** ve ilk günlerde puan olmaması | Yalnızca tamamlanmış işler puanlanır. Bayes ortalaması kullanılır. Yeni dükkanlar "Yeni" etiketiyle gösterilir. Tabloya girmek için en az 5 değerlendirme gerekir |
 | 17 | **Kasko/sigorta** ile yapılan onarımlar | Faz 1 kapsam dışı (SSS'de belirtilir). Faz 2'de eksper/sigorta entegrasyonu |
@@ -167,6 +169,8 @@ stateDiagram-v2
 | 20 | Fotoğraflarda **kişisel veri** (plaka, konum) | EXIF/konum silinir. Faz 2'de otomatik plaka bulanıklaştırma |
 | 21 | **Sahte ve spam talepler** | SMS kodu, telefon başına en fazla 3 aktif talep, sık iptalde ek doğrulama |
 | 22 | **Marka logoları** | Logo kullanımı marka sahiplerinin kurallarına tabidir. Prototipte yazı olarak gösterildi, lansmandan önce hukuki kontrol gerekir |
+| 23 | Müşterinin **seçimden önce soruları** var (parça, randevu, garanti), dükkanın da ek bilgiye ihtiyacı olabilir | Talep ve dükkan bazında maskeli mesajlaşma ([§7.11](#711-maskeli-mesajlaşma)). Kimlik ve iletişim bilgisi seçime kadar gizli |
+| 24 | **Maskeleme atlatılabilir** (yazıyla numara, fotoğraftaki numara) | Kural tabanlı filtre ilk savunmadır; asıl caydırıcı, güvencenin yalnızca platform içi işlerde geçerli olmasıdır. Tekrarlayan girişimler operasyon incelemesine düşer. Faz 2'de yazıyla yazılmış numara ve görsel içi metin tespiti |
 
 ---
 
@@ -179,7 +183,7 @@ Aşağıdaki süreler ve oranlar **önerilen varsayılanlardır**. Hepsi yöneti
 - **G1.** TamirPort müşteri ile dükkanı buluşturan aracı platformdur. Onarım hizmetinin sağlayıcısı dükkandır.
 - **G2.** Tüm tutarlar Türk lirası ve KDV dahildir. Müşterinin teklifte gördüğü tutar ödeyeceği tutardır; komisyon dükkan hakedişinden düşülür.
 - **G3.** Platformdan gelen işler için platform dışında ödeme alınamaz, ek ücret istenemez.
-- **G4.** Adres ve telefon bilgileri yalnızca seçimden sonra ve karşılıklı olarak görünür.
+- **G4.** Adres ve telefon bilgileri yalnızca seçimden sonra ve karşılıklı olarak görünür. Seçimden önce taraflar yalnızca maskeli mesajlaşmayla yazışır ([§7.11](#711-maskeli-mesajlaşma)).
 - **G5.** Tüm kritik anlar (teslim, kesin fiyat, ödeme, tamamlama, teslim alma, onay) zaman damgası ve fotoğrafla kayıt altına alınır. Uyuşmazlıkta bu kayıtlar esas alınır.
 
 ### 7.2 Talep (müşteri)
@@ -198,7 +202,7 @@ Aşağıdaki süreler ve oranlar **önerilen varsayılanlardır**. Hepsi yöneti
 - **D3.** Teklifler kapalı zarftır: dükkanlar birbirinin fiyatını görmez, yalnızca teklif sayısını görür.
 - **D4.** Teklifte zorunlu alanlar: toplam tutar (KDV dahil), tahmini süre (iş günü), parça türü (orijinal / muadil / çıkma / parça gerekmiyor), işçilik garantisi (ay), kapsadığı kategoriler. İsteğe bağlı alanlar: işçilik ve parça kırılımı, not, çekici, söküm-montaj bedeli.
 - **D5.** Teklif 7 gün geçerlidir. Dükkan, müşteri seçim yapana kadar teklifini bir kez güncelleyebilir veya geri çekebilir. Güncelleme müşteriye bildirilir.
-- **D6.** Bilgi yetersizse dükkan, teklif vermek yerine hazır sorularla ek fotoğraf veya bilgi isteyebilir.
+- **D6.** Bilgi yetersizse dükkan, teklif vermek yerine maskeli mesajla ek fotoğraf veya bilgi isteyebilir (hazır sorular ve serbest not). Teklif notunda da iletişim ve ödeme bilgisi paylaşılamaz.
 
 ### 7.4 Seçim ve teslim
 
@@ -263,9 +267,32 @@ Aşağıdaki süreler ve oranlar **önerilen varsayılanlardır**. Hepsi yöneti
 - **U3.** Puanı 3,5'in altına düşen veya itiraz oranı yüksek olan dükkanlar incelemeye alınır.
 - **U4.** Dükkan, kapasitesi dolduğunda **Teklif almaya açık** anahtarını kapatabilir.
 
+### 7.11 Maskeli mesajlaşma
+
+- **M1.** Her talep ve dükkan için ayrı bir yazışma vardır. Yazışma, dükkan teklif verdiğinde ya da ek bilgi istediğinde açılır. Müşteri yalnızca teklif veren veya soru soran dükkanlara yazabilir.
+- **M2.** Seçimden önce dükkan müşterinin adını ve numarasını görmez. Mesajdaki telefon numarası, e-posta, bağlantı ve sosyal medya hesabı gönderilmeden otomatik gizlenir. Gönderen neyin gizlendiğini görür.
+- **M3.** IBAN ve kart numarası her aşamada gizlenir. IBAN paylaşımı ve "elden, nakit, havale, EFT" gibi ifadeler iki tarafa da ödeme uyarısı olarak gösterilir ve operasyon incelemesine düşer. Tekrarı [§7.9](#79-vazgeçme-ve-yaptırımlar)'daki yaptırımlara tabidir.
+- **M4.** Seçimden sonra yalnızca seçilen dükkanla yazışma sürer; telefon ve e-posta artık gizlenmez. Diğer dükkanların yazışmaları sistem mesajıyla kapanır ve salt okunur olur. Talep kapanırsa yazışmalar da kapanır; araç dükkandaysa teslim için seçilen dükkanla yazışma açık kalır.
+- **M5.** Mesajla fiyat ve kapsam değişmez. Kesin fiyat, revize ve ek iş yalnızca kendi akış adımlarıyla geçerlidir ([§7.5](#75-kesin-fiyat-ve-ödeme)); mesajdaki sözler teklifin yerine geçmez.
+- **M6.** Mesajlar ve fotoğraflar uyuşmazlıkta kayıt olarak kullanılır ve talep kapandıktan sonra 2 yıl saklanır (KVKK saklama politikasına bağlanmalı). Hakaret, spam ve kişisel veri içeren mesajlar moderasyonla kaldırılır.
+- **M7.** Dükkanın ilk yanıt süresi profilde **yanıt hızı** olarak görünür ve Önerilen sıralamasına girer (P5).
+
 ---
 
-## 8. Onayınızı bekleyen kararlar
+## 8. Kararlar
+
+### 8.1 Verilen kararlar
+
+27 Eylül 2026:
+
+| Karar | Sonuç |
+| --- | --- |
+| "Güvenle yaptır" konumlandırması | Landing'in ana mesajı oldu: başlık, adımlar, "Ne sağlıyoruz" bölümü ve Teklif Takip'teki güvence şeridi |
+| Maskeli mesajlaşma | Faz 1a'ya alındı, kurallar [§7.11](#711-maskeli-mesajlaşma). Hazır soru akışının yerini aldı |
+| Tahmini fiyat aralığı (teklifler gelmeden önce) | Şimdilik eklenmiyor. Faz 3'te fotoğraftan hasar ön tespitiyle birlikte ele alınacak |
+| "Döşeme" kategorisi | Adı **Trim** oldu |
+
+### 8.2 Onayınızı bekleyen kararlar
 
 | Karar | Önerimiz | Alternatifler |
 | --- | --- | --- |
@@ -280,6 +307,8 @@ Aşağıdaki süreler ve oranlar **önerilen varsayılanlardır**. Hepsi yöneti
 | Minimum garanti | 6 ay işçilik | Zorunlu değil, yalnızca gösterilir |
 | Lansman bölgesi | Tek şehirle başlamak (ör. İstanbul Anadolu yakası) | Tüm Türkiye |
 | Misafir mi, üyelik mi? | Misafir (telefon + SMS kodu), üyelik isteğe bağlı | Ödeme adımında üyelik zorunlu |
+| Misafire mesaj bildirimi | Okunmamış mesajlar için toplu SMS, günde en fazla 2 | Her mesajda SMS · yalnızca sayfada gösterim |
+| Mesaj saklama süresi | Talep kapandıktan sonra 2 yıl | 1 yıl · garanti süresi bitene kadar |
 
 ---
 
@@ -287,10 +316,10 @@ Aşağıdaki süreler ve oranlar **önerilen varsayılanlardır**. Hepsi yöneti
 
 | Faz | Kapsam |
 | --- | --- |
-| **Faz 1a: Lansman** | Landing page (9 bölüm) · hasar tespit modülü + SMS kodu · Teklif Takip sayfası (misafir) · teklif karşılaştırma ve seçim · iletişim bilgisi + randevu · Dükkan Paneli lite (gelen talepler, teklif ver, aktif işler) · yönetim: dükkan onayı |
+| **Faz 1a: Lansman** | Landing page (9 bölüm, "Güvenle yaptır" mesajı) · hasar tespit modülü + SMS kodu · Teklif Takip sayfası (misafir) · teklif karşılaştırma ve seçim · maskeli mesajlaşma · iletişim bilgisi + randevu · Dükkan Paneli lite (gelen talepler, teklif ver, mesajlar, aktif işler) · yönetim: dükkan onayı, mesaj moderasyonu |
 | **Faz 1b: Güvenli ödeme** | Ödeme kuruluşu entegrasyonu · teslim/teslim alma kodları · kesin fiyat ve revize · karşılıklı onay + otomatik onay · komisyon ve hakediş · fatura yükleme |
-| **Faz 2** | Müşteri Paneli (üyelik, Garajım, faturalar) · değerlendirme ve puan tablosu (gerçek veriyle) · itiraz yönetimi · yönetim paneli · ek iş talebi · e-posta/push bildirimleri |
-| **Faz 3** | Kasko/sigorta ve eksper entegrasyonu · çekici/vale hizmeti · fotoğraftan yapay zekâ ile hasar ön tespiti · plaka ile araç bilgisi doldurma · mobil uygulama |
+| **Faz 2** | Müşteri Paneli (üyelik, Garajım, faturalar) · değerlendirme ve puan tablosu (gerçek veriyle) · itiraz yönetimi · yönetim paneli · ek iş talebi · e-posta/push bildirimleri · gelişmiş maskeleme (yazıyla yazılmış numara, görsel içi metin) |
+| **Faz 3** | Kasko/sigorta ve eksper entegrasyonu · çekici/vale hizmeti · fotoğraftan yapay zekâ ile hasar ön tespiti ve **tahmini fiyat aralığı** · plaka ile araç bilgisi doldurma · mobil uygulama |
 
 > **Not:** Puan tablosu Faz 1'de gerçek veri olmadan boş kalır. Lansmanda anlaşmalı firmalar "Yeni" etiketiyle listelenir, tablo yeterli değerlendirme birikince açılır.
 
@@ -303,14 +332,14 @@ Prototip bu klasördedir ve örnek verilerle çalışır. Girilen bilgiler hiçb
 | Ekran | Dosya | Gösterdiği |
 | --- | --- | --- |
 | Ana sayfa | `index.html` | 9 bölüm, hasar tespit sihirbazı, SMS kodu simülasyonu, Tekliflerim girişi |
-| Teklif Takip | `talep.html` | Teklif listesi, karşılaştırma, seçim, randevu, teslim kodu, kesin fiyat/revize, güvenli ödeme, onarım, karşılıklı onay, itiraz, değerlendirme |
-| Dükkan Paneli | `dukkan-paneli.html` | Kategoriye göre filtrelenmiş talepler, teklif formu (komisyon ve net hakediş hesabı), aktif işler, hakedişler, değerlendirmeler, profil |
+| Teklif Takip | `talep.html` | Teklif listesi, karşılaştırma, maskeli mesajlaşma, seçim, randevu, teslim kodu, kesin fiyat/revize, güvenli ödeme, onarım, karşılıklı onay, itiraz, değerlendirme |
+| Dükkan Paneli | `dukkan-paneli.html` | Kategoriye göre filtrelenmiş talepler, ek bilgi isteme, teklif formu (komisyon ve net hakediş hesabı), mesajlar, aktif işler, hakedişler, değerlendirmeler, profil |
 | Müşteri Paneli | `musteri-paneli.html` | Taleplerim, Garajım, ödemeler, değerlendirmeler, bildirim tercihleri |
 | Akış ve kurallar | `akis.html` | Bu dokümanın görsel özeti ve ekran haritası |
 
 Uçtan uca denemek için:
 
 1. Ana sayfada formu doldurup SMS kodunu girin.
-2. Teklif Takip sayfasında teklifleri inceleyin.
-3. Başka bir sekmede Dükkan Paneli › Gelen talepler'den kendi teklifinizi verin; teklif müşteri sayfasına düşer.
+2. Teklif Takip sayfasında teklifleri inceleyin. Teklif kartındaki **Mesaj** ile dükkana yazın: numara, e-posta ve IBAN gizlenir, örnek dükkanlar birkaç saniye içinde yanıt verir.
+3. Başka bir sekmede Dükkan Paneli › Gelen talepler'den ek bilgi isteyin ya da kendi teklifinizi verin; mesaj ve teklif müşteri sayfasına düşer. Yazışmalar Dükkan Paneli › Mesajlar'da toplanır.
 4. Kendi teklifinizi seçin ve adımları iki taraftan ilerletin. Sağ alttaki **Prototip kontrolleri** ile adımları tek sayfadan da atlayabilirsiniz.

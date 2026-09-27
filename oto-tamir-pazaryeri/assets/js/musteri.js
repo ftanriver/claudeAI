@@ -38,9 +38,11 @@
     const satir = (t) => {
       const q = TP.secilenTeklif(t);
       const n = TP.gorunurTeklifler(t).length;
-      const sag = t.asama === "teklif"
+      const mesaj = TP.talepOkunmamis(t, "musteri");
+      const sag = (t.asama === "teklif"
         ? `<b>${n} teklif</b>`
-        : q ? `<b>${TP.tl(TP.odenecekTutar(t))}</b><span class="soluk">${esc(q.dukkan.ad)}</span>` : "";
+        : q ? `<b>${TP.tl(TP.odenecekTutar(t))}</b><span class="soluk">${esc(q.dukkan.ad)}</span>` : "")
+        + (mesaj ? `<span class="badge badge-danger">${TP.ikon("message-square")}${mesaj} yeni mesaj</span>` : "");
       return `<a class="talep-satir" href="talep.html" data-talep="${esc(t.id)}">
         ${TP.plaka(t.id, "kucuk")}
         <div><h3>${esc(TP.aracAdi(t.arac))} · ${t.arac.yil}</h3><p><span>${katAdlari(t.kategoriler)}</span><span>${esc(t.ilce)}, ${esc(t.il)}</span><span>${TP.tarih(t.olusturma)}</span></p></div>

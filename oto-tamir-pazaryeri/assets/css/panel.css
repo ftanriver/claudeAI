@@ -20,6 +20,7 @@ body { background: var(--zemin-2); }
 }
 .app-nav .sayac:empty { display: none; }
 .app-nav a[aria-current="page"] .sayac { background: rgba(255, 255, 255, .22); color: #fff; }
+.app-nav .sayac.kirmizi, .app-nav a[aria-current="page"] .sayac.kirmizi { background: var(--hata); color: #fff; }
 .app-yan-alt { margin-top: auto; display: grid; gap: 10px; padding: 14px; border-radius: 14px; background: var(--zemin-2); }
 .app-yan-alt .profil-ust h3 { font-size: 15px; }
 .app-yan-alt .profil-ust p { font-size: 12.5px; }
@@ -57,6 +58,11 @@ body { background: var(--zemin-2); }
   }
   .app-alt-nav .ikon { width: 22px; height: 22px; }
   .app-alt-nav [aria-current="page"] { color: var(--tq-700); }
+  .app-alt-nav .sayac {
+    position: absolute; top: 4px; left: calc(50% + 4px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px;
+    display: grid; place-items: center; background: var(--hata); color: #fff; font-size: 11px; font-weight: 700; line-height: 1;
+  }
+  .app-alt-nav .sayac:empty { display: none; }
   .app-alt-nav [aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--tq-600); }
   .app-icerik { padding-bottom: 104px; }
   .demo { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }

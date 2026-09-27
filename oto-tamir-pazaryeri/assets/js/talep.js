@@ -18,6 +18,8 @@
   let randevuGun = null, randevuSaat = null, randevuDuzenle = false;
   const puanlar = { genel: 0, iscilik: 0, fiyat: 0, zaman: 0, iletisim: 0 };
   let demo;
+  let aktifSohbet = null;
+  const bekleyenYanit = {};
 
   const tamKapsar = (q) => talep.kategoriler.every((k) => q.kapsam.includes(k));
   const odenenToplam = () => (talep.odeme ? talep.odeme.tutar + (talep.odeme.ekTutar || 0) : TP.odenecekTutar(talep));
@@ -28,7 +30,10 @@
     gorunenIdler = new Set(TP.gorunurTeklifler(talep).map((q) => q.id));
   }
   function kaydet() { TP.talepKaydet(talep, true); }
+  // Dükkan panelinin başka sekmede yazdıklarını (mesaj, teklif) ezmemek için yazmadan önce güncel hali okunur
+  function tazele() { talep = TP.talepGetir(talep.id) || talep; return talep; }
   function guncelle(fn) {
+    tazele();
     fn(talep);
     kaydet();
     ciz();
@@ -128,13 +133,19 @@
     return `
       <section class="panel">
         <div class="panel-head">
-          <div><h2>Teklifler</h2><p>Teklifler kapalı zarftır: dükkanlar birbirinin fiyatını görmez. Fiyat, puan ve garantiye bakarak birini seç.</p></div>
+          <div><h2>Teklifler</h2><p>Teklifler kapalı zarftır: dükkanlar birbirinin fiyatını görmez. Sorularını dükkanlara mesajla sor, fiyat, puan ve garantiye bakarak birini seç.</p></div>
           <div class="sure-kutusu">
             <div class="satir"><span>${acik ? "Teklif toplama" : "Seçim süresi"}</span><b data-geri-sayim="${acik ? bitis : bitis + 72 * 3600e3}" data-sonek=" kaldı"></b></div>
             <div class="sure-bar"><span style="width:${acik ? gecen : 100}%"></span></div>
             <div class="satir"><span>${talep.iletilen || tum.length} dükkana iletildi</span><span>${tum.length} teklif</span></div>
           </div>
         </div>
+        <ul class="guvence-seridi" aria-label="Güvenle yaptır">
+          <li>${TP.ikon("shield-check")}<b>Güvenle yaptır</b></li>
+          <li>${TP.ikon("lock")}Ödeme onayına kadar dükkana geçmez</li>
+          <li>${TP.ikon("eye")}Numaran seçime kadar gizli</li>
+          <li>${TP.ikon("scale")}Kesin fiyatta tek revize, ret hakkı</li>
+        </ul>
         ${tum.length === 0 ? `
           <div class="teklif-bekleniyor"><span class="nabiz"></span>Talebin ${talep.iletilen} dükkana iletildi. İlk teklif geldiğinde burada görünecek ve sana SMS ile haber vereceğiz.</div>
           <div class="iskelet" aria-hidden="true"><div></div><div></div></div>` : `
@@ -221,6 +232,7 @@
       ${q.not ? `<p class="teklif-not">${esc(q.not)}</p>` : ""}
       <div class="teklif-alt">
         <label class="check"><input type="checkbox" data-karsilastir="${q.id}" ${secili ? "checked" : ""} ${dolu ? "disabled" : ""}>Karşılaştır</label>
+        <button type="button" class="btn btn-ghost btn-sm" data-mesaj="${esc(d.id)}">${TP.ikon("message-square")}Mesaj${okunmamisRozet(TP.okunmamis(TP.mesajlar(talep, d.id), "musteri"))}</button>
         <button type="button" class="btn btn-ghost btn-sm" data-detay="${q.id}">Detaylar</button>
         <button type="button" class="btn btn-primary btn-sm" data-sec="${q.id}">Bu teklifi seç</button>
       </div>
@@ -254,7 +266,7 @@
         </ul>
         <div><p class="alt-baslik">Değerlendirme kriterleri</p>${TP.kriterCubuklari(d.kriterler)}</div>
         <div><p class="alt-baslik">Son değerlendirmeler</p>${TP.yorumlarHTML(2, d.puan > 4.7 ? 0 : 2)}</div>
-        <p class="notice">${TP.ikon("lock")}<span>Adres ve telefon, bu teklifi seçtiğinde açılır.</span></p>`,
+        <p class="notice">${TP.ikon("lock")}<span>Adres ve telefon, bu teklifi seçtiğinde açılır. Sorun varsa dükkana <button type="button" class="link-btn" data-mesaj="${esc(d.id)}" data-kapat>mesajla sor</button>; numaran gizli kalır.</span></p>`,
       butonlar: talep.asama === "teklif"
         ? [{ metin: "Kapat" }, { metin: "Bu teklifi seç", sinif: "btn-primary", eylem: () => { setTimeout(() => secimOnay(id), 60); } }]
         : [{ metin: "Kapat" }],
@@ -381,7 +393,7 @@
             <p>${TP.ikon("phone")}<span><span class="tel">${esc(d.tel)}</span> · <button type="button" class="link-btn" data-kopyala="${esc(d.tel)}">Kopyala</button></span></p>
             <p>${TP.ikon("clock")}<span>${esc(d.saatler)}</span></p>
             ${d.sahibi ? `<p>${TP.ikon("user")}<span>Yetkili: ${esc(d.sahibi)}</span></p>` : ""}
-            <div class="btn-row"><a class="btn btn-secondary btn-sm" href="${harita}" target="_blank" rel="noopener">${TP.ikon("navigation")}Yol tarifi al</a><a class="btn btn-secondary btn-sm" href="tel:${d.tel.replace(/\s/g, "")}">${TP.ikon("phone")}Ara</a></div>
+            <div class="btn-row"><a class="btn btn-secondary btn-sm" href="${harita}" target="_blank" rel="noopener">${TP.ikon("navigation")}Yol tarifi al</a><a class="btn btn-secondary btn-sm" href="tel:${d.tel.replace(/\s/g, "")}">${TP.ikon("phone")}Ara</a><button type="button" class="btn btn-secondary btn-sm" data-mesaj="${esc(d.id)}">${TP.ikon("message-square")}Mesaj yaz${okunmamisRozet(TP.okunmamis(TP.mesajlar(talep, d.id), "musteri"))}</button></div>
           </div>
         </div>
       </section>
@@ -510,7 +522,7 @@
     if (q.kapsam.includes("boya")) adimlar.push("Astar, boya ve fırınlama");
     if (q.kapsam.includes("mekanik")) adimlar.push("Mekanik onarım ve test sürüşü");
     if (q.kapsam.includes("elektrik")) adimlar.push("Elektrik arıza onarımı ve testler");
-    if (q.kapsam.includes("doseme")) adimlar.push("Döşeme dikimi ve montaj");
+    if (q.kapsam.includes("trim")) adimlar.push("Trim onarımı ve montaj");
     adimlar.push("Montaj, kalite kontrol ve temizlik");
     return adimlar;
   }
@@ -709,6 +721,95 @@
     </section>`;
   }
 
+  // ---------- Maskeli mesajlaşma ----------
+  // Her dükkanla ayrı yazışma. Seçimden önce numara, e-posta, bağlantı ve IBAN gizlenir; seçimden sonra
+  // yalnızca seçilen dükkanla yazışma sürer, diğerleri salt okunur kalır.
+  const HAZIR_MUSTERI = ["Fiyata parça dahil mi?", "Aracı ne zaman getirebilirim?", "Garanti neyi kapsıyor?", "İkame araç veriyor musunuz?"];
+  const okunmamisRozet = (n) => (n ? `<span class="okunmamis">${n}<span class="gizli-metin"> okunmamış</span></span>` : "");
+  const sohbetTeklifi = (dukkanId) => talep.teklifler.find((q) => q.dukkan.id === dukkanId) || null;
+  const sohbetDukkani = (dukkanId) => (sohbetTeklifi(dukkanId) || {}).dukkan || V.dukkan(dukkanId) || { id: dukkanId, ad: "Dükkan", kisa: "D" };
+  const seciliDukkan = (dukkanId) => { const q = TP.secilenTeklif(talep); return !!q && q.dukkan.id === dukkanId; };
+  function sohbetSalt(dukkanId) {
+    if (talep.asama === "teklif") return null;
+    if (talep.asama === "iptal") return seciliDukkan(dukkanId) && talep.teslim ? null : "Talep kapandı; bu yazışma artık salt okunur.";
+    return seciliDukkan(dukkanId) ? null : "Başka bir teklifi seçtin; bu yazışma kapandı.";
+  }
+  function sohbetAc(dukkanId) {
+    const d = sohbetDukkani(dukkanId);
+    const demoDukkan = dukkanId === V.DEMO_DUKKAN;
+    // close olayı eşzamansız gelir; yalnızca kapanan pencere hâlâ aktifse temizlenir
+    let pencere = null;
+    pencere = aktifSohbet = TP.sohbet({
+      anahtar: dukkanId,
+      baslik: esc(d.ad),
+      alt: `${esc(talep.id)} · ${esc(TP.aracAdi(talep.arac))}${d.puan ? ` · ${TP.puan(d.puan)} puan` : ""}`,
+      logo: TP.dukkanLogo(d, "kucuk"),
+      rol: "musteri",
+      secimOncesi: () => !seciliDukkan(dukkanId),
+      salt: () => sohbetSalt(dukkanId),
+      oku: () => TP.mesajlar(talep, dukkanId),
+      gonder: (m) => {
+        tazele();
+        TP.mesajEkle(talep, dukkanId, m);
+        kaydet();
+        ciz();
+        if (!demoDukkan) otomatikYanit(dukkanId);
+      },
+      okunduYap: () => {
+        tazele();
+        if (TP.okunduYap(TP.mesajlar(talep, dukkanId), "musteri")) { kaydet(); ciz(); }
+      },
+      hazir: talep.asama === "teklif" ? HAZIR_MUSTERI : [],
+      bosMetin: `Sorunu dükkana buradan sor. Adın ve numaran, sen teklif seçene kadar dükkana gösterilmez.${demoDukkan ? " Prototip: bu dükkan adına Dükkan paneli › Mesajlar'dan yanıt verebilirsin." : ""}`,
+      kapaninca: () => { if (aktifSohbet === pencere) aktifSohbet = null; },
+    });
+  }
+  // Örnek dükkanların yanıtı simüle edilir. Seçimden önceki ilk yanıt, maskelemeyi göstermek için numara içerir.
+  function otomatikYanit(dukkanId) {
+    clearTimeout(bekleyenYanit[dukkanId]);
+    bekleyenYanit[dukkanId] = setTimeout(() => {
+      tazele();
+      if (sohbetSalt(dukkanId)) return;
+      const liste = TP.mesajlar(talep, dukkanId);
+      const son = [...liste].reverse().find((m) => m.kim === "musteri");
+      if (!son) return;
+      const q = sohbetTeklifi(dukkanId) || { garantiAy: 12, sureGun: 3 };
+      const metin = String(son.metin || "").toLocaleLowerCase("tr");
+      let yanit = [
+        [/parça|parca/, `Fiyata parça ve işçilik dahil; parça türü teklifte yazıyor (${TP.PARCA[q.parcaTuru] || "orijinal parça"}). Değişirse kesin fiyatta gerekçesiyle görürsünüz.`],
+        [/ne zaman|getir|randevu|saat|yarın/, "Hafta içi 09:00'dan itibaren getirebilirsiniz. Teklifi seçerseniz takvimimizden size uyan saati seçebilirsiniz."],
+        [/garanti/, `İşçiliğe ${q.garantiAy} ay garanti veriyoruz. Garanti talebi de TamirPort üzerinden açılıyor.`],
+        [/ikame|yedek araç|araç ver/, `İkame aracımız yok ama işi ${q.sureGun} iş gününde teslim etmeyi planlıyoruz.`],
+        [/indirim|pazarlık|son fiyat|daha uygun|düşer mi|düşebilir/, "Fiyatı parça maliyetine göre verdik. Aracı görünce kesin fiyat netleşir; değişirse gerekçesiyle sorarız."],
+      ].find(([desen]) => desen.test(metin))?.[1]
+        || (son.foto ? "Fotoğraf için teşekkürler, hasar tahmin ettiğimiz gibi görünüyor. Teklifimiz geçerli." : "Merhaba, mesajınızı aldık. Aracı görmeden kesin konuşmak zor ama teklifimizdeki kapsam hasarınız için yeterli görünüyor.");
+      const secimOncesi = !seciliDukkan(dukkanId);
+      if (secimOncesi && !talep.maskeDemo) { yanit += " İsterseniz 0532 000 12 34'ten arayın, daha hızlı konuşuruz."; talep.maskeDemo = true; }
+      TP.mesajEkle(talep, dukkanId, TP.mesajOlustur("dukkan", yanit, { secimOncesi }));
+      kaydet();
+      yeniMesajGeldi(dukkanId);
+    }, 2400);
+  }
+  function yeniMesajGeldi(dukkanId) {
+    if (aktifSohbet && aktifSohbet.anahtar === dukkanId) aktifSohbet.yenile();
+    else TP.toast(`Yeni mesaj: <b>${esc(sohbetDukkani(dukkanId).ad)}</b> <button type="button" class="link-btn" data-mesaj="${esc(dukkanId)}">Aç</button>`, { ikon: "message-square" });
+    ciz();
+  }
+  function mesajlarKartiHTML() {
+    const sohbetler = Object.entries(talep.mesajlar || {}).filter(([, l]) => l.length)
+      .sort((a, b) => b[1][b[1].length - 1].zaman - a[1][a[1].length - 1].zaman);
+    if (!sohbetler.length && !(talep.asama === "teklif" && TP.gorunurTeklifler(talep).length)) return "";
+    return `<section class="yan-kart"><h2>Mesajlar</h2>
+      ${sohbetler.length ? `<div class="mesaj-listesi">${sohbetler.map(([dId, l]) => {
+        const d = sohbetDukkani(dId), son = l[l.length - 1], n = TP.okunmamis(l, "musteri");
+        return `<button type="button" class="mesaj-satir${n ? " yeni" : ""}" data-mesaj="${esc(dId)}">${TP.dukkanLogo(d, "kucuk")}
+          <span class="ms-orta"><span class="ms-ust"><b>${esc(d.ad)}</b><span>${TP.saat(son.zaman)}</span></span>
+          <span class="ms-onizleme">${son.kim === "musteri" ? "Sen: " : ""}${esc(TP.mesajOnizleme(son))}</span></span>${okunmamisRozet(n)}</button>`;
+      }).join("")}</div>` : ""}
+      <p class="yan-aciklama soluk">${TP.ikon("lock")} Numaran ve adın, teklif seçene kadar dükkanlara gösterilmez. Telefon, e-posta ve IBAN yazışmada otomatik gizlenir.</p>
+    </section>`;
+  }
+
   // ---------- Yan panel ----------
   function yanCiz() {
     const q = TP.secilenTeklif(talep);
@@ -718,6 +819,7 @@
         <div class="secim-ozet">${TP.dukkanLogo(q.dukkan, "kucuk")}<div><b>${esc(q.dukkan.ad)}</b><div class="soluk">${TP.PARCA[q.parcaTuru]} · ${q.garantiAy} ay garanti</div></div></div>
         <dl><div><dt>Ön teklif</dt><dd>${TP.tl(q.tutar)}</dd></div>${talep.kesinFiyat ? `<div><dt>Kesin fiyat</dt><dd>${TP.tl(talep.kesinFiyat.tutar)}</dd></div>` : ""}${talep.odeme ? `<div><dt>Ödeme</dt><dd>${talep.odeme.durum === "aktarildi" ? "Dükkana aktarıldı" : "Güvende (bloke)"}</dd></div>` : ""}</dl>
       </section>` : ""}
+      ${mesajlarKartiHTML()}
       <section class="yan-kart"><h2>Talep detayı</h2>
         ${fotolar.length ? `<div class="yan-foto">${fotolar.map((f, i) => `<img src="${f}" alt="Hasar fotoğrafı ${i + 1}">`).join("")}</div>` : `<div class="yan-bos">${TP.ikon("image")}<span>Fotoğraf eklenmedi.${talep.asama === "teklif" ? " Fotoğraf eklemek daha isabetli teklif almanı sağlar." : ""}</span>${talep.asama === "teklif" ? `<label class="btn btn-secondary btn-sm" for="ek-foto">${TP.ikon("image-plus")}Fotoğraf ekle</label><input type="file" id="ek-foto" accept="image/*" multiple class="gizli-metin">` : ""}</div>`}
         <p class="yan-aciklama${talep.aciklama ? "" : " soluk"}">${talep.aciklama ? esc(talep.aciklama) : "Açıklama eklenmedi."}</p>
@@ -763,8 +865,8 @@
   function demoCiz(panel) {
     const asamalar = [["teklif", "Teklifler"], ["secildi", "Dükkan seçildi"], ["dukkanda", "Araç dükkanda"], ["onarimda", "Onarımda"], ["onay", "Karşılıklı onay"], ["tamamlandi", "Tamamlandı"], ["itiraz", "Sorun bildirildi"]];
     const eylemler = {
-      teklif: [["yeni-teklif", "Yeni teklif gelsin"], ["tum-teklifler", "Bekleyen teklifleri göster"]],
-      secildi: [["teslim-al", "Dükkan aracı teslim aldı"]],
+      teklif: [["yeni-teklif", "Yeni teklif gelsin"], ["tum-teklifler", "Bekleyen teklifleri göster"], ...(TP.gorunurTeklifler(talep).length ? [["dukkan-mesaj", "Dükkandan mesaj gelsin"]] : [])],
+      secildi: [["teslim-al", "Dükkan aracı teslim aldı"], ["dukkan-mesaj", "Dükkandan mesaj gelsin"]],
       dukkanda: talep.kesinFiyat ? [] : [["fiyat-ayni", "Dükkan ön teklifi onayladı"], ["fiyat-revize", "Dükkan fiyatı revize etti"]],
       onarimda: [["ilerleme", "İlerleme ekle"], ...(talep.ekIs ? [] : [["ek-is", "Ek iş talep et"]]), ["tamamla", "Onarımı tamamla"]],
       onay: talep.teslimAlma ? [["otomatik-onay", "72 saat doldu"]] : [["teslim-et", "Aracı müşteriye teslim et"]],
@@ -794,6 +896,19 @@
         return;
       }
       case "tum-teklifler": talep.teklifler.forEach((x) => { x.gelisSn = 0; }); kaydet(); yeniTeklifKontrol(); return;
+      case "dukkan-mesaj": {
+        // Seçimden önce ilk teklif veren dükkan yazar; e-posta adresi maskelemeyi gösterir
+        const hedef = q || TP.gorunurTeklifler(talep)[0];
+        if (!hedef) return;
+        const secimOncesi = !q;
+        tazele();
+        TP.mesajEkle(talep, hedef.dukkan.id, TP.mesajOlustur("dukkan", secimOncesi
+          ? "Merhaba, fotoğraflarınıza baktık. Tampon braketi de kırık görünüyor, teklifimize dahil ettik. Başka fotoğraf varsa usta.kaporta@gmail.com adresine de atabilirsiniz."
+          : "Randevunuzu gördük, sizi bekliyoruz. Ruhsatı ve yedek anahtarı yanınızda getirmeyi unutmayın.", { secimOncesi }));
+        kaydet();
+        yeniMesajGeldi(hedef.dukkan.id);
+        return;
+      }
       case "teslim-al": guncelle((t) => TP.akis.aracTeslimAl(t, { km: 48250, yakit: "1/2" })); TP.sms("Aracın dükkana teslim edildi. Teslim kaydı ve fotoğraflar takip sayfanda."); return;
       case "fiyat-ayni": guncelle((t) => TP.akis.kesinFiyatGir(t, { tutar: q.tutar })); TP.sms(`Kesin fiyat: ${TP.tl(q.tutar)} (ön teklifle aynı). Onaylayıp güvenle ödeyebilirsin.`); return;
       case "fiyat-revize": {
@@ -832,6 +947,7 @@
       const b = (s) => t.closest(s);
       let el;
       if ((el = b("[data-sirala]"))) { siralama = el.dataset.sirala; icerikCiz(); }
+      else if ((el = b("[data-mesaj]"))) sohbetAc(el.dataset.mesaj);
       else if ((el = b("[data-detay]"))) detayAc(el.dataset.detay);
       else if ((el = b("[data-sec]"))) secimOnay(el.dataset.sec);
       else if (b("[data-karsilastir-temizle]")) { karsilastirma.clear(); icerikCiz(); karsilastirBarCiz(); }
@@ -978,8 +1094,14 @@
     // Dükkan panelinden gelen değişiklikleri (yeni teklif, teslim, kesin fiyat) yansıt
     TP.degisinceDinle(() => {
       const id = talep.id;
+      const onceki = Object.fromEntries(Object.entries(talep.mesajlar || {}).map(([k, l]) => [k, l.length]));
       talep = TP.talepGetir(id) || talep;
       ciz();
+      // Dükkan panelinden yeni mesaj geldiyse (sohbet açık değilse) bildir
+      Object.entries(talep.mesajlar || {}).forEach(([dId, l]) => {
+        const yeni = l.slice(onceki[dId] || 0).filter((m) => m.kim === "dukkan");
+        if (yeni.length && !(aktifSohbet && aktifSohbet.anahtar === dId)) TP.toast(`Yeni mesaj: <b>${esc(sohbetDukkani(dId).ad)}</b> <button type="button" class="link-btn" data-mesaj="${esc(dId)}">Aç</button>`, { ikon: "message-square" });
+      });
       yeniTeklifKontrol();
       if (demo) demo.yenile();
     });

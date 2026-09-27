@@ -43,7 +43,9 @@
 
   // ---------- İkonlar, logo, küçük bileşenler ----------
   TP.ikon = (ad, sinif = "") => `<svg class="ikon ${sinif}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${(window.TP_IKONLAR || {})[ad] || ""}</svg>`;
-  TP.logo = () => `<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><defs><linearGradient id="tp-logo-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2FBBCF"/><stop offset="1" stop-color="#077F96"/></linearGradient></defs><path fill="url(#tp-logo-g)" d="M12 2h16a10 10 0 0 1 10 10v10a10 10 0 0 1-10 10H18.5l-7.3 5.7a1 1 0 0 1-1.6-.8v-5.4A10 10 0 0 1 2 22V12A10 10 0 0 1 12 2z"/><path transform="translate(8.6 5.6) scale(.95)" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>`;
+  // Her logo kendi gradyan kimliğini alır: gizli bir kopyadaki (ör. mobilde yan menü) tanıma bağlanıp boş çizilmesin
+  let logoSayac = 0;
+  TP.logo = () => { const g = "tp-logo-g" + logoSayac++; return `<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2FBBCF"/><stop offset="1" stop-color="#077F96"/></linearGradient></defs><path fill="url(#${g})" d="M12 2h16a10 10 0 0 1 10 10v10a10 10 0 0 1-10 10H18.5l-7.3 5.7a1 1 0 0 1-1.6-.8v-5.4A10 10 0 0 1 2 22V12A10 10 0 0 1 12 2z"/><path transform="translate(8.6 5.6) scale(.95)" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg>`; };
   TP.ikonlariYerlestir = (kok = document) => {
     for (const el of TP.$$("i[data-ikon]", kok)) el.outerHTML = TP.ikon(el.dataset.ikon, el.className);
     for (const el of TP.$$("i[data-logo]", kok)) el.outerHTML = TP.logo();
@@ -70,7 +72,7 @@
 
   // ---------- Prototip durumu ----------
   // Girilen her şey yalnızca bu tarayıcıda tutulur; depolama kapalıysa sayfa bellekten çalışır.
-  const ANAHTAR = "tamirport-prototip-v1";
+  const ANAHTAR = "tamirport-prototip-v2";
   let bellek = null;
   const bos = () => ({ talepler: [], aktifTalepId: null, oturumTel: null, dukkan: {} });
   TP.durumOku = () => {
@@ -144,6 +146,15 @@
 
   const olay = (t, metin, kim) => { (t.olaylar = t.olaylar || []).push({ zaman: Date.now(), metin, kim }); };
   const kod4 = () => String(1000 + Math.floor(Math.random() * 9000));
+  // Akıştaki değişikliği açık yazışmalara sistem mesajı olarak düşer; aynı mesaj art arda eklenmez (demo atlamaları).
+  // Bu değişiklikleri müşteri kendisi yaptığı için mesaj müşteri tarafında okunmuş sayılır, dükkana bildirim olur.
+  const sistemMesaji = (t, metinFn) => Object.keys(t.mesajlar || {}).forEach((dId) => {
+    const metin = metinFn(dId), liste = t.mesajlar[dId], son = liste[liste.length - 1];
+    if (son && son.kim === "sistem" && son.metin === metin) return;
+    const m = TP.mesajOlustur("sistem", metin);
+    m.okundu.musteri = true;
+    TP.mesajEkle(t, dId, m);
+  });
   const SIFIRLANACAK = ["secilenTeklifId", "secimZamani", "randevu", "teslim", "kesinFiyat", "odeme", "ekIs", "ilerleme", "tamamlanma", "teslimAlma", "onayZamani", "itiraz", "degerlendirme", "iptalNedeni", "teslimKodu", "teslimAlmaKodu"];
 
   TP.akis = {
@@ -156,6 +167,9 @@
       t.teslimAlmaKodu = kod4();
       t.teklifler.forEach((x) => { if (x.durum !== "geri-cekildi") x.durum = x.id === teklifId ? "secildi" : "secilmedi"; });
       olay(t, `${q.dukkan.ad} seçildi. Adres ve telefon bilgileri karşılıklı açıldı.`, "musteri");
+      sistemMesaji(t, (dId) => (dId === q.dukkan.id
+        ? "Müşteri bu teklifi seçti. İletişim bilgileri karşılıklı açıldı; yazışma buradan sürebilir."
+        : "Müşteri başka bir teklifi seçti. Bu yazışma kapandı."));
     },
     randevuKaydet(t, zaman) {
       t.randevu = zaman;
@@ -232,9 +246,11 @@
       t.asama = "iptal";
       t.iptalNedeni = neden;
       olay(t, neden, "musteri");
+      sistemMesaji(t, () => "Müşteri talebi kapattı. Bu yazışma kapandı.");
     },
     // Seçim ya da talep iptalinden sonra teklif listesine döner; geçmiş korunur
     teklifeDon(t, metin) {
+      sistemMesaji(t, () => metin);
       SIFIRLANACAK.forEach((k) => delete t[k]);
       t.asama = "teklif";
       t.teklifler.forEach((q) => { if (q.durum !== "geri-cekildi") q.durum = "beklemede"; });
@@ -416,6 +432,141 @@
     };
     r.readAsDataURL(dosya);
   });
+
+  // ---------- Maskeli mesajlaşma ----------
+  // Seçimden önce telefon, e-posta, bağlantı ve sosyal medya hesabı gizlenir; IBAN ve kart numarası her zaman gizlenir.
+  const MASKELER = [
+    ["iban", "IBAN", /\bTR\s?\d{2}(?:\s?\d{4}){5}\s?\d{2}\b/gi, true],
+    ["kart", "kart numarası", /\b(?:\d[ -]?){15}\d\b/g, true],
+    ["eposta", "e-posta", /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, false],
+    ["baglanti", "bağlantı", /\b(?:https?:\/\/|www\.)\S+|\b[\w-]+\.(?:com\.tr|com|net|org|app|me)\b(?:\/\S*)?/gi, false],
+    ["numara", "telefon numarası", /(?:\+?9\s?0[\s.-]*)?(?:\(?0\)?[\s.-]*)?\(?[2-5]\d{2}\)?[\s.-]*\d{3}[\s.-]*\d{2}[\s.-]*\d{2}/g, false],
+    ["hesap", "sosyal medya hesabı", /(^|[\s(])@[\w.]{3,}/g, false],
+  ];
+  const MASKE_ETIKET = { iban: "IBAN gizlendi", kart: "kart no gizlendi", eposta: "e-posta gizlendi", baglanti: "bağlantı gizlendi", numara: "numara gizlendi", hesap: "hesap gizlendi" };
+  TP.maskele = (metin, { secimOncesi = true } = {}) => {
+    let sonuc = String(metin || "");
+    const gizlenen = [];
+    for (const [tur, ad, desen, herZaman] of MASKELER) {
+      if (!secimOncesi && !herZaman) continue;
+      sonuc = sonuc.replace(desen, (eslesme, onEk) => {
+        if (!gizlenen.includes(ad)) gizlenen.push(ad);
+        return tur === "hesap" ? `${onEk}[[${tur}]]` : `[[${tur}]]`;
+      });
+    }
+    // IBAN ya da kart paylaşımı da platform dışı ödeme girişimi sayılır
+    const disOdeme = /\b(elden|nakit|nakden|havale|eft)/i.test(sonuc) || /\[\[(iban|kart)\]\]/.test(sonuc);
+    return { metin: sonuc, gizlenen, disOdeme };
+  };
+  TP.mesajHTML = (metin) => TP.esc(metin)
+    .replace(/\[\[(\w+)\]\]/g, (e, tur) => `<span class="maske">${TP.ikon("lock")}${MASKE_ETIKET[tur] || "gizlendi"}</span>`)
+    .replace(/\n/g, "<br>");
+  TP.mesajOnizleme = (m) => (m.foto && !m.metin ? "Fotoğraf" : String(m.metin || "").replace(/\[\[\w+\]\]/g, "•••"));
+  let mesajSayac = 0;
+  TP.mesajOlustur = (kim, metin, { secimOncesi = true, foto = null } = {}) => {
+    const m = kim === "sistem" ? { metin, gizlenen: [], disOdeme: false } : TP.maskele(metin, { secimOncesi });
+    return {
+      id: "m" + Date.now().toString(36) + (mesajSayac++), kim, metin: m.metin, gizlenen: m.gizlenen, disOdeme: m.disOdeme, foto,
+      zaman: Date.now(), okundu: { musteri: kim === "musteri", dukkan: kim === "dukkan" },
+    };
+  };
+  TP.mesajlar = (t, dukkanId) => ((t && t.mesajlar) || {})[dukkanId] || [];
+  TP.mesajEkle = (t, dukkanId, m) => {
+    t.mesajlar = t.mesajlar || {};
+    (t.mesajlar[dukkanId] = t.mesajlar[dukkanId] || []).push(m);
+  };
+  TP.okunmamis = (liste, rol) => liste.filter((m) => m.kim !== rol && !(m.okundu && m.okundu[rol])).length;
+  TP.okunduYap = (liste, rol) => {
+    let degisti = false;
+    liste.forEach((m) => {
+      if (m.kim !== rol && !(m.okundu && m.okundu[rol])) { m.okundu = { ...(m.okundu || {}), [rol]: true }; degisti = true; }
+    });
+    return degisti;
+  };
+  TP.talepOkunmamis = (t, rol) => Object.values((t && t.mesajlar) || {}).reduce((s, l) => s + TP.okunmamis(l, rol), 0);
+
+  // Sohbet penceresi. Veri kaynağından bağımsızdır; oku / gonder / okunduYap çağıran sayfadan gelir.
+  // o: { anahtar, baslik, alt, logo, rol, secimOncesi(), salt(), oku(), gonder(m), okunduYap(), hazir[], bosMetin, kapaninca }
+  TP.sohbet = (o) => {
+    TP.$(".sohbet-modal")?.close();
+    const d = document.createElement("dialog");
+    d.className = "modal sohbet-modal";
+    d.setAttribute("aria-label", `${String(o.baslik).replace(/<[^>]+>/g, "")} ile mesajlar`);
+    d.innerHTML = `<div class="modal-head sohbet-bas">${o.logo || ""}<div><h2 class="modal-title">${o.baslik}</h2>${o.alt ? `<p class="modal-sub">${o.alt}</p>` : ""}</div>
+        <button type="button" class="icon-btn" data-kapat aria-label="Kapat">${TP.ikon("x")}</button></div>
+      <p class="sohbet-guvence" data-guvence></p>
+      <div class="sohbet-akis" data-akis role="log" aria-live="polite"></div>
+      <div class="sohbet-alt" data-alt></div>`;
+    document.body.append(d);
+    const akis = d.querySelector("[data-akis]"), alt = d.querySelector("[data-alt]"), guvence = d.querySelector("[data-guvence]");
+
+    const balon = (m) => {
+      if (m.kim === "sistem") return `<div class="balon sistem"><p>${TP.mesajHTML(m.metin)}</p><span class="balon-zaman">${TP.saat(m.zaman)}</span></div>`;
+      const benim = m.kim === o.rol;
+      const gizleme = benim && m.gizlenen && m.gizlenen.length ? `<p class="balon-uyari">${TP.ikon("shield-alert")}<span>Güvenliğin için ${m.gizlenen.join(", ")} gizlendi.</span></p>` : "";
+      const odeme = m.disOdeme ? `<p class="balon-uyari">${TP.ikon("triangle-alert")}<span>Ödemeler yalnızca TamirPort üzerinden yapılır; platform dışı ödeme güvence kapsamında değildir.</span></p>` : "";
+      return `<div class="balon ${benim ? "benim" : "onlarin"}">${m.foto ? `<img src="${m.foto}" alt="Mesajdaki fotoğraf">` : ""}${m.metin ? `<p>${TP.mesajHTML(m.metin)}</p>` : ""}<span class="balon-zaman">${TP.saat(m.zaman)}</span>${gizleme}${odeme}</div>`;
+    };
+    const formHTML = () => `${(o.hazir || []).length ? `<div class="sohbet-hazir" aria-label="Hazır mesajlar">${o.hazir.map((h, i) => `<button type="button" class="chip" data-hazir="${i}">${TP.esc(h)}</button>`).join("")}</div>` : ""}
+      <form class="sohbet-giris" data-form>
+        <label class="icon-btn" title="Fotoğraf ekle">${TP.ikon("camera")}<input type="file" accept="image/*" class="gizli-metin" data-foto aria-label="Fotoğraf ekle"></label>
+        <textarea class="input" rows="1" maxlength="600" placeholder="Mesaj yaz…" aria-label="Mesaj" data-metin></textarea>
+        <button type="submit" class="btn btn-primary" aria-label="Gönder">${TP.ikon("send")}</button>
+      </form>`;
+    const gonder = (metin, foto = null) => {
+      metin = (metin || "").trim();
+      if (!metin && !foto) return;
+      const m = TP.mesajOlustur(o.rol, metin, { secimOncesi: o.secimOncesi(), foto });
+      o.gonder(m);
+      ciz();
+      if (m.gizlenen.length) TP.toast(`Mesajındaki ${m.gizlenen.join(", ")} gizlendi. ${o.secimOncesi() ? "İletişim bilgileri teklif seçilince açılır." : "Ödeme yalnızca TamirPort üzerinden yapılır."}`, { tur: "uyari", ikon: "shield-alert" });
+    };
+    const bagla = () => {
+      const form = alt.querySelector("[data-form]"), kutu = alt.querySelector("[data-metin]");
+      const boyutla = () => { kutu.style.height = "auto"; kutu.style.height = Math.min(kutu.scrollHeight + 2, 120) + "px"; };
+      form.addEventListener("submit", (e) => { e.preventDefault(); gonder(kutu.value); kutu.value = ""; boyutla(); kutu.focus(); });
+      kutu.addEventListener("input", boyutla);
+      kutu.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+      alt.querySelector("[data-foto]").addEventListener("change", async (e) => {
+        const f = e.target.files[0];
+        e.target.value = "";
+        if (!f) return;
+        try { gonder("", await TP.fotoKucult(f, 640)); } catch (err) { TP.toast("Fotoğraf okunamadı.", { tur: "uyari" }); }
+      });
+      alt.querySelectorAll("[data-hazir]").forEach((b) => b.addEventListener("click", () => gonder(o.hazir[Number(b.dataset.hazir)])));
+    };
+    // Akış bir canlı bölge (role=log): yalnızca yeni gelen balonlar eklenir ki ekran okuyucu tüm yazışmayı yeniden okumasın
+    let cizilen = [];
+    function ciz() {
+      const liste = o.oku();
+      const salt = o.salt ? o.salt() : null;
+      guvence.innerHTML = o.secimOncesi()
+        ? `${TP.ikon("lock")}<span><b>Numaralar gizli.</b> Teklif seçilene kadar telefon, e-posta, bağlantı ve IBAN otomatik gizlenir.</span>`
+        : `${TP.ikon("shield-check")}<span><b>Teklif seçildi.</b> İletişim bilgileri açık; IBAN ve kart bilgileri yine gizlenir.</span>`;
+      const idler = liste.map((m) => m.id);
+      const devam = cizilen.length > 0 && cizilen.length <= idler.length && cizilen.every((id, i) => idler[i] === id);
+      if (!liste.length) akis.innerHTML = `<p class="sohbet-bos">${o.bosMetin || "Henüz mesaj yok."}</p>`;
+      else if (devam) { if (idler.length > cizilen.length) akis.insertAdjacentHTML("beforeend", liste.slice(cizilen.length).map(balon).join("")); }
+      else akis.innerHTML = liste.map(balon).join("");
+      cizilen = idler;
+      if (salt) alt.innerHTML = `<p class="sohbet-salt">${TP.ikon("lock")}${salt}</p>`;
+      else if (!alt.querySelector("[data-form]")) { alt.innerHTML = formHTML(); bagla(); }
+      akis.scrollTop = akis.scrollHeight;
+      if (o.okunduYap) o.okunduYap();
+    }
+    const dinleyici = (e) => { if (e.key === ANAHTAR) ciz(); };
+    addEventListener("storage", dinleyici);
+    d.addEventListener("close", () => {
+      removeEventListener("storage", dinleyici);
+      if (o.kapaninca) o.kapaninca();
+      d.remove();
+    });
+    ciz(); // geçmiş, pencere açılmadan çizilir; açılışta canlı bölge duyurusu yapılmaz
+    TP.modalAc(d);
+    akis.scrollTop = akis.scrollHeight;
+    setTimeout(() => alt.querySelector("[data-metin]")?.focus(), 60);
+    return { anahtar: o.anahtar, yenile: ciz, kapat: () => d.close() };
+  };
 
   TP.kopyala = async (metin, mesaj = "Kopyalandı") => {
     try {

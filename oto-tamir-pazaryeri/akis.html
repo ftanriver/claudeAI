@@ -26,9 +26,9 @@
 
 <section class="akis-ust">
   <div class="wrap">
-    <p class="eyebrow">Ürün akışı · v0.1 taslak</p>
+    <p class="eyebrow">Ürün akışı · v0.2 taslak</p>
     <h1>Akış, açık noktalar ve karşılıklı kurallar</h1>
-    <p class="lead">Hasar talebinden güvenli ödemeye kadar her adımın kim tarafından, hangi ekranda ve hangi kuralla yapıldığı. Süreler ve oranlar önerilen varsayılanlardır; onay bekleyen kararlar aşağıda ayrıca listelendi.</p>
+    <p class="lead">Hasar talebinden güvenli ödemeye kadar her adımın kim tarafından, hangi ekranda ve hangi kuralla yapıldığı. Süreler ve oranlar önerilen varsayılanlardır; verilen ve onay bekleyen kararlar aşağıda ayrıca listelendi.</p>
   </div>
 </section>
 
@@ -41,7 +41,7 @@
     <a href="#durumlar">Talep durumları</a>
     <a href="#acik-noktalar">Açık noktalar</a>
     <a href="#kurallar">Karşılıklı kurallar</a>
-    <a href="#kararlar">Onay bekleyen kararlar</a>
+    <a href="#kararlar">Kararlar</a>
     <a href="#fazlar">Faz planı</a>
     <a href="#ekranlar">Prototip ekranları</a>
   </nav>
@@ -49,13 +49,14 @@
   <div class="dok-icerik">
     <section class="dok-bolum" id="ozet" aria-labelledby="ozet-b">
       <h2 id="ozet-b">Kısa özet</h2>
+      <div class="karar-kutusu"><b>Ana mesaj: "Güvenle yaptır."</b><p>Teklif toplamak artık ayırt edici değil. Ayırt edici olan güvence katmanı: ödeme onaya kadar dükkana geçmez, dükkanların belgeleri doğrulanır, numara seçime kadar gizli kalır.</p></div>
       <div class="ozet-kartlari">
         <div class="ozet-kart"><i data-ikon="smartphone"></i><b>Üyelik şartı yok</b><p>Misafir kullanıcı telefon + SMS kodu ile şifresiz bir kimlik edinir. Üyelik bu kimliğe e-posta, araç ve fatura bilgisi eklemektir.</p></div>
         <div class="ozet-kart"><i data-ikon="inbox"></i><b>Teklifler Teklif Takip sayfasında</b><p>SMS kodundan sonra otomatik açılır, linki SMS ile gider, başka cihazdan Tekliflerim + SMS koduyla girilir.</p></div>
         <div class="ozet-kart"><i data-ikon="scale"></i><b>Fotoğrafla verilen fiyat ön tekliftir</b><p>Kesin fiyat araç görülünce netleşir. Dükkanın tek revize hakkı vardır; müşteri reddedip aracını ücretsiz geri alabilir.</p></div>
-        <div class="ozet-kart"><i data-ikon="credit-card"></i><b>Ödeme kesin fiyat onayında alınır</b><p>Seçimde değil. Onarım, ödeme güvenceye alınmadan başlamaz.</p></div>
-        <div class="ozet-kart"><i data-ikon="lock"></i><b>Para ödeme kuruluşunda bekler</b><p>Karşılıklı onayla ya da teslimden 72 saat sonra otomatik olarak dükkana aktarılır; komisyon aktarımda düşülür.</p></div>
-        <div class="ozet-kart"><i data-ikon="key-round"></i><b>Kritik anlar kodla kayıtlı</b><p>İletişim bilgileri seçimden sonra açılır. Teslim ve teslim alma, müşterinin ekranındaki 4 haneli kodla kayda geçer.</p></div>
+        <div class="ozet-kart"><i data-ikon="lock"></i><b>Ödeme onaya kadar dükkana geçmez</b><p>Kesin fiyat onayında alınır, ödeme kuruluşunda bloke bekler. Karşılıklı onayla ya da teslimden 72 saat sonra komisyon düşülerek aktarılır.</p></div>
+        <div class="ozet-kart"><i data-ikon="message-square"></i><b>Maskeli mesajlaşma</b><p>Seçimden önce yazışma platformda kalır; telefon, e-posta, bağlantı ve IBAN otomatik gizlenir. İletişim bilgileri seçimle açılır.</p></div>
+        <div class="ozet-kart"><i data-ikon="key-round"></i><b>Kritik anlar kodla kayıtlı</b><p>Teslim ve teslim alma, müşterinin ekranındaki 4 haneli kodla kayda geçer; fotoğraf, km ve yakıt kaydedilir.</p></div>
       </div>
     </section>
 
@@ -66,8 +67,8 @@
         <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Hasar tespit formunu doldurur: <b>araç</b> (marka, model, yıl, paket) → <b>hasar</b> (kategori, fotoğraf, açıklama) → <b>iletişim</b> (ad, soyad, telefon, il/ilçe, KVKK onayı).</p></div><a href="index.html#teklif-al">Ana sayfa<i data-ikon="arrow-up-right"></i></a></li>
         <li><div><span class="badge kim kim-musteri">Müşteri</span><p>SMS ile gelen 6 haneli kodu girer. Talep yayına girer, talep numarası oluşur, takip linki SMS ile gönderilir.</p></div><a href="index.html#teklif-al">Ana sayfa<i data-ikon="arrow-up-right"></i></a></li>
         <li><div><span class="badge kim kim-sistem">Sistem</span><p>Talebi, seçilen kategorilerden en az birine hizmet veren ve bölgesi talebin ilçesini kapsayan onaylı dükkanlara iletir. Dükkanlar müşterinin adını ve telefonunu görmez.</p></div><a href="dukkan-paneli.html#talepler">Dükkan paneli<i data-ikon="arrow-up-right"></i></a></li>
-        <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>24 saat içinde kapalı zarf teklif verir: tutar (KDV dahil), süre, parça türü, garanti, kapsam, not. Formda komisyon ve net hakediş anında hesaplanır.</p></div><a href="dukkan-paneli.html#talepler">Dükkan paneli<i data-ikon="arrow-up-right"></i></a></li>
-        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Teklifleri fiyat, puan, mesafe, süre, parça türü ve garantiye göre karşılaştırır ve birini seçer.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>24 saat içinde kapalı zarf teklif verir: tutar (KDV dahil), süre, parça türü, garanti, kapsam, not. Formda komisyon ve net hakediş anında hesaplanır. Bilgi yetersizse önce maskeli mesajla ek fotoğraf ister.</p></div><a href="dukkan-paneli.html#talepler">Dükkan paneli<i data-ikon="arrow-up-right"></i></a></li>
+        <li><div><span class="badge kim kim-musteri">Müşteri</span><p>Teklifleri fiyat, puan, mesafe, süre, parça türü ve garantiye göre karşılaştırır. Sorularını dükkanlara maskeli mesajla sorar ve birini seçer.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
         <li><div><span class="badge kim kim-iki">İki taraf</span><p>Seçimle adres, konum ve telefon müşteriye; ad ve telefon dükkana açılır. Müşteri randevu seçer ve ekranında 4 haneli <b>teslim kodu</b> görünür.</p></div><a href="talep.html">Teklif takip<i data-ikon="arrow-up-right"></i></a></li>
         <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>Aracı teslim alırken kodu girer; aracın 4 yönden fotoğrafını, kilometresini ve yakıt seviyesini kaydeder.</p></div><a href="dukkan-paneli.html#isler">Aktif işler<i data-ikon="arrow-up-right"></i></a></li>
         <li><div><span class="badge kim kim-dukkan">Dükkan</span><p>Aracı inceler, <b>kesin fiyatı</b> girer: ön teklif geçerli ya da gerekçeli ve fotoğraflı revize.</p></div><a href="dukkan-paneli.html#isler">Aktif işler<i data-ikon="arrow-up-right"></i></a></li>
@@ -93,6 +94,7 @@
       <ul class="kural-listesi">
         <li><i data-ikon="lock"></i><span>Link yalnızca görüntüleme yetkisi verir. Seçim, ödeme, onay ve itiraz için cihazda oturum yoksa SMS kodu istenir. Linkli sayfada ad ve telefon gösterilmez.</span></li>
         <li><i data-ikon="smartphone"></i><span>SMS yalnızca kritik anlarda gider: ilk teklif, teklif özeti, randevu hatırlatması, kesin fiyat, onarımın bitmesi, otomatik onaydan 24 saat önce. Her teklif için ayrı SMS gönderilmez.</span></li>
+        <li><i data-ikon="message-square"></i><span>Dükkanlarla yazışma da Teklif Takip sayfasından yapılır. Dükkana panelde anlık, misafir müşteriye okunmamış mesajlar için toplu SMS (günde en fazla 2) bildirim gider.</span></li>
         <li><i data-ikon="user-check"></i><span>Üyelik talep tamamlandığında önerilir: "Aracını kaydet, bir dahaki sefere tek tıkla teklif al".</span></li>
       </ul>
     </section>
@@ -134,7 +136,7 @@
           <tr><td class="no">11</td><td>Onarım sırasında ek iş çıkabilir</td><td>Yalnızca platformdan ek iş talebi + müşteri onayı + ek ödeme.</td></tr>
           <tr><td class="no">12</td><td>Komisyon modeli belirsiz</td><td>Müşteri teklifteki tutarı öder; komisyon (başlangıç önerisi %10) dükkan hakedişinden düşülür.</td></tr>
           <tr><td class="no">13</td><td>Fatura kimden kime?</td><td>Dükkan tam tutarın faturasını müşteriye keser ve tamamlama adımında yükler; TamirPort dükkana komisyon faturası keser.</td></tr>
-          <tr><td class="no">14</td><td>İletişim alınıp platform dışında anlaşılması</td><td>İletişim seçimden sonra açılır; teklif notunda telefon/IBAN engellenir; güvence, garanti ve puan yalnızca platform içi işlerde.</td></tr>
+          <tr><td class="no">14</td><td>İletişim alınıp platform dışında anlaşılması</td><td>İletişim seçimden sonra açılır; seçimden önceki soru-cevap maskeli mesajlaşmayla platformda kalır; teklif notunda iletişim ve IBAN engellenir; güvence, garanti ve puan yalnızca platform içi işlerde.</td></tr>
           <tr><td class="no">15</td><td>Dükkan kabul kriterleri yok</td><td>Vergi levhası, oda/sicil kaydı, adres ve fotoğraf, IBAN, ödeme kuruluşu KYC'si, en az 6 ay işçilik garantisi.</td></tr>
           <tr><td class="no">16</td><td>Puan manipülasyonu ve ilk günlerde puan olmaması</td><td>Yalnızca tamamlanan işler puanlanır; Bayes ortalaması; tabloya girmek için en az 5 değerlendirme.</td></tr>
           <tr><td class="no">17</td><td>Kasko/sigorta ile yapılan onarımlar</td><td>Faz 1 kapsam dışı (SSS'de belirtildi); Faz 2'de eksper/sigorta entegrasyonu.</td></tr>
@@ -143,6 +145,8 @@
           <tr><td class="no">20</td><td>Fotoğraflarda kişisel veri (plaka, konum)</td><td>EXIF/konum silinir; Faz 2'de otomatik plaka bulanıklaştırma.</td></tr>
           <tr><td class="no">21</td><td>Sahte ve spam talepler</td><td>SMS kodu, telefon başına en fazla 3 aktif talep, sık iptalde ek doğrulama.</td></tr>
           <tr><td class="no">22</td><td>Marka logoları</td><td>Logo kullanımı marka sahiplerinin kurallarına tabi; prototipte yazı olarak gösterildi.</td></tr>
+          <tr><td class="no">23</td><td>Müşterinin seçimden önce soruları var, dükkanın da ek bilgiye ihtiyacı olabilir</td><td>Talep ve dükkan bazında maskeli mesajlaşma (M1–M7). Kimlik ve iletişim bilgisi seçime kadar gizli.</td></tr>
+          <tr><td class="no">24</td><td>Maskeleme atlatılabilir (yazıyla numara, fotoğraftaki numara)</td><td>Filtre ilk savunmadır; asıl caydırıcı güvencenin yalnızca platform içi işlerde geçerli olmasıdır. Tekrarlayan girişimler incelemeye düşer; Faz 2'de gelişmiş tespit.</td></tr>
         </tbody>
       </table></div>
     </section>
@@ -155,7 +159,7 @@
           <li><code>G1</code><span>TamirPort aracı platformdur; onarım hizmetinin sağlayıcısı dükkandır.</span></li>
           <li><code>G2</code><span>Tutarlar TL ve KDV dahildir. Müşterinin teklifte gördüğü tutar ödeyeceği tutardır; komisyon dükkan hakedişinden düşülür.</span></li>
           <li><code>G3</code><span>Platformdan gelen işler için platform dışında ödeme alınamaz, ek ücret istenemez.</span></li>
-          <li><code>G4</code><span>Adres ve telefon yalnızca seçimden sonra, karşılıklı olarak görünür.</span></li>
+          <li><code>G4</code><span>Adres ve telefon yalnızca seçimden sonra, karşılıklı olarak görünür. Seçimden önce taraflar yalnızca maskeli mesajlaşmayla yazışır.</span></li>
           <li><code>G5</code><span>Teslim, kesin fiyat, ödeme, tamamlama, teslim alma ve onay zaman damgası ve fotoğrafla kayda geçer; uyuşmazlıkta esas alınır.</span></li>
         </ol></section>
         <section class="kural-grubu"><h3><i data-ikon="car-front"></i>Talep (müşteri)</h3><ol>
@@ -172,7 +176,7 @@
           <li><code>D3</code><span>Teklifler kapalı zarftır; dükkanlar yalnızca teklif sayısını görür.</span></li>
           <li><code>D4</code><span>Zorunlu alanlar: tutar, süre, parça türü, işçilik garantisi, kapsam.</span></li>
           <li><code>D5</code><span>Teklif 7 gün geçerlidir; seçime kadar bir kez güncellenebilir ya da geri çekilebilir.</span></li>
-          <li><code>D6</code><span>Bilgi yetersizse dükkan hazır sorularla ek fotoğraf veya bilgi isteyebilir.</span></li>
+          <li><code>D6</code><span>Bilgi yetersizse dükkan maskeli mesajla ek fotoğraf veya bilgi isteyebilir. Teklif notunda da iletişim ve ödeme bilgisi paylaşılamaz.</span></li>
         </ol></section>
         <section class="kural-grubu"><h3><i data-ikon="key-round"></i>Seçim ve teslim</h3><ol>
           <li><code>S1</code><span>Müşteri tek teklif seçer; diğerleri "Seçilmedi" olur ve bildirilir.</span></li>
@@ -213,6 +217,15 @@
           <li><code>P5</code><span>"Önerilen" sıralaması fiyat, puan, mesafe, teklife sadakat ve yanıt hızının birleşimidir.</span></li>
           <li><code>P6</code><span>Dükkanın müşteriyi değerlendirmesi herkese açık değildir; güven skorunda kullanılır.</span></li>
         </ol></section>
+        <section class="kural-grubu genis"><h3><i data-ikon="message-square"></i>Maskeli mesajlaşma</h3><ol>
+          <li><code>M1</code><span>Her talep ve dükkan için ayrı yazışma vardır; dükkan teklif verdiğinde ya da ek bilgi istediğinde açılır.</span></li>
+          <li><code>M2</code><span>Seçimden önce dükkan müşterinin adını ve numarasını görmez. Telefon, e-posta, bağlantı ve sosyal medya hesabı otomatik gizlenir; gönderen neyin gizlendiğini görür.</span></li>
+          <li><code>M3</code><span><b>IBAN ve kart numarası her aşamada gizlenir.</b> IBAN paylaşımı ve "elden, nakit, havale, EFT" ifadeleri iki tarafa uyarı olarak gösterilir, incelemeye düşer; tekrarı V5'e tabidir.</span></li>
+          <li><code>M4</code><span>Seçimden sonra yalnızca seçilen dükkanla yazışma sürer; diğerleri sistem mesajıyla kapanır ve salt okunur olur.</span></li>
+          <li><code>M5</code><span>Mesajla fiyat ve kapsam değişmez; kesin fiyat, revize ve ek iş yalnızca kendi adımlarıyla geçerlidir.</span></li>
+          <li><code>M6</code><span>Mesajlar uyuşmazlıkta kayıt olarak kullanılır, talep kapandıktan sonra 2 yıl saklanır; hakaret, spam ve kişisel veri moderasyonla kaldırılır.</span></li>
+          <li><code>M7</code><span>Dükkanın ilk yanıt süresi profilde yanıt hızı olarak görünür ve Önerilen sıralamasına girer.</span></li>
+        </ol></section>
         <section class="kural-grubu genis"><h3><i data-ikon="ban"></i>Vazgeçme ve yaptırımlar</h3><ol>
           <li><code>V1</code><span><b>Seçimden önce:</b> müşteri ücretsiz iptal eder; dükkan teklifini serbestçe geri çeker.</span></li>
           <li><code>V2</code><span><b>Seçimden sonra, teslimden önce:</b> müşteri ücretsiz iptal eder (90 günde 2 kez randevuya gelmezse güven skoru düşer); dükkan iptal ederse ceza puanı alır ve diğer teklifler müşteriye yeniden açılır.</span></li>
@@ -224,7 +237,18 @@
     </section>
 
     <section class="dok-bolum" id="kararlar" aria-labelledby="kararlar-b">
-      <h2 id="kararlar-b">Onayınızı bekleyen kararlar</h2>
+      <h2 id="kararlar-b">Kararlar</h2>
+      <h3>Verilen kararlar · 27 Eylül 2026</h3>
+      <div class="tablo-kap"><table class="dok-tablo">
+        <thead><tr><th>Karar</th><th>Sonuç</th></tr></thead>
+        <tbody>
+          <tr><td>"Güvenle yaptır" konumlandırması</td><td>Landing'in ana mesajı: başlık, adımlar, "Ne sağlıyoruz" ve Teklif Takip'teki güvence şeridi.</td></tr>
+          <tr><td>Maskeli mesajlaşma</td><td>Faz 1a'ya alındı (M1–M7). Hazır soru akışının yerini aldı.</td></tr>
+          <tr><td>Tahmini fiyat aralığı (teklifler gelmeden önce)</td><td>Şimdilik eklenmiyor; Faz 3'te fotoğraftan hasar ön tespitiyle birlikte ele alınacak.</td></tr>
+          <tr><td>"Döşeme" kategorisi</td><td>Adı <b>Trim</b> oldu.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Onayınızı bekleyen kararlar</h3>
       <div class="tablo-kap"><table class="dok-tablo">
         <thead><tr><th>Karar</th><th>Önerimiz</th><th>Alternatifler</th></tr></thead>
         <tbody>
@@ -239,6 +263,8 @@
           <tr><td>Minimum garanti</td><td>6 ay işçilik</td><td>Zorunlu değil, yalnızca gösterilir</td></tr>
           <tr><td>Lansman bölgesi</td><td>Tek şehir (ör. İstanbul Anadolu yakası)</td><td>Tüm Türkiye</td></tr>
           <tr><td>Misafir mi, üyelik mi?</td><td>Misafir (telefon + SMS kodu), üyelik isteğe bağlı</td><td>Ödeme adımında üyelik zorunlu</td></tr>
+          <tr><td>Misafire mesaj bildirimi</td><td>Okunmamış mesajlar için toplu SMS, günde en fazla 2</td><td>Her mesajda SMS · yalnızca sayfada gösterim</td></tr>
+          <tr><td>Mesaj saklama süresi</td><td>Talep kapandıktan sonra 2 yıl</td><td>1 yıl · garanti süresi bitene kadar</td></tr>
         </tbody>
       </table></div>
     </section>
@@ -246,21 +272,21 @@
     <section class="dok-bolum" id="fazlar" aria-labelledby="fazlar-b">
       <h2 id="fazlar-b">Faz planı</h2>
       <div class="fazlar">
-        <div class="faz aktif"><span class="badge badge-solid">Faz 1a · Lansman</span><ul><li>Landing page (9 bölüm)</li><li>Hasar tespit modülü + SMS kodu</li><li>Teklif Takip (misafir)</li><li>Karşılaştırma, seçim, iletişim, randevu</li><li>Dükkan Paneli lite</li><li>Yönetim: dükkan onayı</li></ul></div>
+        <div class="faz aktif"><span class="badge badge-solid">Faz 1a · Lansman</span><ul><li>Landing page (9 bölüm, "Güvenle yaptır")</li><li>Hasar tespit modülü + SMS kodu</li><li>Teklif Takip (misafir)</li><li>Karşılaştırma, seçim, iletişim, randevu</li><li>Maskeli mesajlaşma</li><li>Dükkan Paneli lite</li><li>Yönetim: dükkan onayı, mesaj moderasyonu</li></ul></div>
         <div class="faz"><span class="badge badge-tq">Faz 1b · Güvenli ödeme</span><ul><li>Ödeme kuruluşu entegrasyonu</li><li>Teslim / teslim alma kodları</li><li>Kesin fiyat ve revize</li><li>Karşılıklı + otomatik onay</li><li>Komisyon, hakediş, fatura yükleme</li></ul></div>
-        <div class="faz"><span class="badge badge-outline">Faz 2</span><ul><li>Müşteri Paneli, Garajım</li><li>Değerlendirme ve puan tablosu (gerçek veri)</li><li>İtiraz yönetimi, yönetim paneli</li><li>Ek iş talebi, e-posta/push</li></ul></div>
-        <div class="faz"><span class="badge badge-outline">Faz 3</span><ul><li>Kasko/sigorta ve eksper</li><li>Çekici / vale</li><li>Fotoğraftan yapay zekâ ile ön tespit</li><li>Plaka ile araç bilgisi, mobil uygulama</li></ul></div>
+        <div class="faz"><span class="badge badge-outline">Faz 2</span><ul><li>Müşteri Paneli, Garajım</li><li>Değerlendirme ve puan tablosu (gerçek veri)</li><li>İtiraz yönetimi, yönetim paneli</li><li>Ek iş talebi, e-posta/push</li><li>Gelişmiş maskeleme</li></ul></div>
+        <div class="faz"><span class="badge badge-outline">Faz 3</span><ul><li>Kasko/sigorta ve eksper</li><li>Çekici / vale</li><li>Fotoğraftan yapay zekâ ile ön tespit ve tahmini fiyat aralığı</li><li>Plaka ile araç bilgisi, mobil uygulama</li></ul></div>
       </div>
       <p class="notice"><i data-ikon="info"></i><span>Puan tablosu ilk günlerde gerçek veri olmadan boş kalır. Lansmanda anlaşmalı firmalar "Yeni" etiketiyle listelenir, tablo yeterli değerlendirme birikince açılır.</span></p>
     </section>
 
     <section class="dok-bolum" id="ekranlar" aria-labelledby="ekranlar-b">
       <h2 id="ekranlar-b">Prototip ekranları</h2>
-      <p>Prototip örnek verilerle çalışır; girilen bilgiler hiçbir yere gönderilmez, yalnızca tarayıcıda tutulur. Uçtan uca denemek için ana sayfada talep oluştur, Dükkan Paneli'nden teklif ver, Teklif Takip'te o teklifi seçip adımları iki taraftan ilerlet. Sağ alttaki <b>Prototip kontrolleri</b> ile adımları tek sayfadan da atlayabilirsin.</p>
+      <p>Prototip örnek verilerle çalışır; girilen bilgiler hiçbir yere gönderilmez, yalnızca tarayıcıda tutulur. Uçtan uca denemek için ana sayfada talep oluştur, Dükkan Paneli'nden teklif ver, Teklif Takip'te o teklifi seçip adımları iki taraftan ilerlet. Teklif kartındaki <b>Mesaj</b> ile dükkana yazabilir, yanıtları Dükkan Paneli › Mesajlar'dan verebilirsin. Sağ alttaki <b>Prototip kontrolleri</b> ile adımları tek sayfadan da atlayabilirsin.</p>
       <div class="ekranlar">
         <a class="ekran" href="index.html"><i data-ikon="house"></i><b>Ana sayfa</b><p>9 bölüm, hasar tespit sihirbazı, SMS kodu, Tekliflerim girişi.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
-        <a class="ekran" href="talep.html"><i data-ikon="inbox"></i><b>Teklif takip</b><p>Teklif karşılaştırma, seçim, randevu, kesin fiyat, güvenli ödeme, onay, itiraz, puanlama.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
-        <a class="ekran" href="dukkan-paneli.html"><i data-ikon="store"></i><b>Dükkan paneli</b><p>Kategoriye göre talepler, komisyon hesaplı teklif formu, aktif işler, hakedişler.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
+        <a class="ekran" href="talep.html"><i data-ikon="inbox"></i><b>Teklif takip</b><p>Teklif karşılaştırma, maskeli mesajlaşma, seçim, randevu, kesin fiyat, güvenli ödeme, onay, itiraz, puanlama.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
+        <a class="ekran" href="dukkan-paneli.html"><i data-ikon="store"></i><b>Dükkan paneli</b><p>Kategoriye göre talepler, ek bilgi isteme, komisyon hesaplı teklif formu, mesajlar, aktif işler, hakedişler.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
         <a class="ekran" href="musteri-paneli.html"><i data-ikon="circle-user-round"></i><b>Müşteri paneli</b><p>Taleplerim, Garajım, ödemeler, değerlendirmeler, bildirim tercihleri.</p><span class="git">Aç<i data-ikon="arrow-right"></i></span></a>
       </div>
     </section>
